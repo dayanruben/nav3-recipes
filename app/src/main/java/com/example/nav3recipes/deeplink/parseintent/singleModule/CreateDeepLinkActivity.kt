@@ -11,12 +11,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
 /**
- * Landing page for this recipe. It displays several options users can choose from to formulate
- * the final deeplink request.
+ * This activity allows the user to create a deep link and make a request with it
  *
- * See [ParseIntentActivity] for how the requested deeplink is handled.
+ * See [MainActivity] for how the requested deeplink is handled.
  */
-class ParseIntentLandingActivity : ComponentActivity() {
+class CreateDeepLinkActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -111,8 +110,8 @@ class ParseIntentLandingActivity : ComponentActivity() {
                 TextContent("Final url:\n$finalUrl")
                 // deeplink to target
                 DeepLinkButton(
-                    context = this@ParseIntentLandingActivity,
-                    targetActivity = ParseIntentActivity::class.java,
+                    context = this@CreateDeepLinkActivity,
+                    targetActivity = MainActivity::class.java,
                     deepLinkUrl = finalUrl
                 )
             }

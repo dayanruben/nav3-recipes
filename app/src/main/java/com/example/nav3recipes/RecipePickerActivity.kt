@@ -31,7 +31,7 @@ import com.example.nav3recipes.basicdsl.BasicDslActivity
 import com.example.nav3recipes.basicsaveable.BasicSaveableActivity
 import com.example.nav3recipes.commonui.CommonUiActivity
 import com.example.nav3recipes.conditional.ConditionalActivity
-import com.example.nav3recipes.deeplink.parseintent.singleModule.ParseIntentLandingActivity
+import com.example.nav3recipes.deeplink.parseintent.singleModule.CreateDeepLinkActivity
 import com.example.nav3recipes.dialog.DialogActivity
 import com.example.nav3recipes.modular.hilt.ModularActivity
 import com.example.nav3recipes.passingarguments.viewmodels.basic.BasicViewModelsActivity
@@ -84,7 +84,7 @@ private val recipes = listOf(
     Recipe("Return result as State", ResultStateActivity::class.java),
 
     Heading("Deeplink"),
-    Recipe("Parse Intent", ParseIntentLandingActivity::class.java),
+    Recipe("Parse Intent", CreateDeepLinkActivity::class.java),
 )
 
 class RecipePickerActivity : ComponentActivity() {

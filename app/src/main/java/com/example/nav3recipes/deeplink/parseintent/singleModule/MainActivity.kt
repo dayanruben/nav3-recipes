@@ -15,7 +15,7 @@ import androidx.navigation3.ui.NavDisplay
  * Parses a target deeplink into a NavKey. There are several crucial steps involved:
  *
  * STEP 1.Parse supported deeplinks (URLs that can be deeplinked into) into a readily readable
- *  format (see [DeepLink])
+ *  format (see [DeepLinkPattern])
  * STEP 2. Parse the requested deeplink into a readily readable, format (see [DeepLinkRequest])
  *  **note** the parsed requested deeplink and parsed supported deeplinks should be cohesive with each
  *  other to facilitate comparison and finding a match
@@ -35,15 +35,15 @@ import androidx.navigation3.ui.NavDisplay
  *  - Up button ves Back Button
  *
  */
-class ParseIntentActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     /** STEP 1. Parse supported deeplinks */
-    private val deepLinkCandidates: List<DeepLink<out NavRecipeKey>> = listOf(
+    private val deepLinkPatterns: List<DeepLinkPattern<out NavRecipeKey>> = listOf(
         // "https://www.nav3recipes.com/home"
-        DeepLink(HomeKey.serializer(), (URL_HOME_EXACT).toUri()),
+        DeepLinkPattern(HomeKey.serializer(), (URL_HOME_EXACT).toUri()),
         // "https://www.nav3recipes.com/users/with/{filter}"
-        DeepLink(UsersKey.serializer(), (URL_USERS_WITH_FILTER).toUri()),
+        DeepLinkPattern(UsersKey.serializer(), (URL_USERS_WITH_FILTER).toUri()),
         // "https://www.nav3recipes.com/users/search?{firstName}&{age}&{location}"
-        DeepLink(SearchKey.serializer(), (URL_SEARCH.toUri())),
+        DeepLinkPattern(SearchKey.serializer(), (URL_SEARCH.toUri())),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +56,7 @@ class ParseIntentActivity : ComponentActivity() {
             /** STEP 2. Parse requested deeplink */
             val target = DeepLinkRequest(uri)
             /** STEP 3. Compared requested with supported deeplink to find match*/
-            val match = deepLinkCandidates.firstNotNullOfOrNull { candidate ->
+            val match = deepLinkPatterns.firstNotNullOfOrNull { candidate ->
                 target.match(candidate)
             }
             /** STEP 4. If match is found, associate match to the correct key*/

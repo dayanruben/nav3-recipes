@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.parseintent.singleModule
+package com.example.nav3recipes.deeplink.basic
 
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +10,21 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.example.nav3recipes.deeplink.basic.deeplinkutil.DeepLinkMatcher
+import com.example.nav3recipes.deeplink.basic.deeplinkutil.DeepLinkPattern
+import com.example.nav3recipes.deeplink.basic.deeplinkutil.DeepLinkRequest
+import com.example.nav3recipes.deeplink.basic.deeplinkutil.DeepLinkMatchResult
+import com.example.nav3recipes.deeplink.basic.deeplinkutil.KeyDecoder
+import com.example.nav3recipes.deeplink.basic.ui.EntryScreen
+import com.example.nav3recipes.deeplink.basic.ui.FriendsList
+import com.example.nav3recipes.deeplink.basic.ui.HomeKey
+import com.example.nav3recipes.deeplink.basic.ui.LIST_USERS
+import com.example.nav3recipes.deeplink.basic.ui.SearchKey
+import com.example.nav3recipes.deeplink.basic.ui.TextContent
+import com.example.nav3recipes.deeplink.basic.ui.URL_HOME_EXACT
+import com.example.nav3recipes.deeplink.basic.ui.URL_SEARCH
+import com.example.nav3recipes.deeplink.basic.ui.URL_USERS_WITH_FILTER
+import com.example.nav3recipes.deeplink.basic.ui.UsersKey
 
 /**
  * Parses a target deeplink into a NavKey. There are several crucial steps involved:
@@ -37,7 +52,8 @@ import androidx.navigation3.ui.NavDisplay
  */
 class MainActivity : ComponentActivity() {
     /** STEP 1. Parse supported deeplinks */
-    private val deepLinkPatterns: List<DeepLinkPattern<out NavRecipeKey>> = listOf(
+    // internal so that landing activity can link to this in the kdocs
+    internal val deepLinkPatterns: List<DeepLinkPattern<out NavKey>> = listOf(
         // "https://www.nav3recipes.com/home"
         DeepLinkPattern(HomeKey.serializer(), (URL_HOME_EXACT).toUri()),
         // "https://www.nav3recipes.com/users/with/{filter}"
@@ -54,10 +70,10 @@ class MainActivity : ComponentActivity() {
         // associate the target with the correct backstack key
         val key: NavKey = uri?.let {
             /** STEP 2. Parse requested deeplink */
-            val target = DeepLinkRequest(uri)
+            val request = DeepLinkRequest(uri)
             /** STEP 3. Compared requested with supported deeplink to find match*/
-            val match = deepLinkPatterns.firstNotNullOfOrNull { candidate ->
-                target.match(candidate)
+            val match = deepLinkPatterns.firstNotNullOfOrNull { pattern ->
+                DeepLinkMatcher(request, pattern).match()
             }
             /** STEP 4. If match is found, associate match to the correct key*/
             match?.let {
@@ -98,9 +114,9 @@ class MainActivity : ComponentActivity() {
                             TextContent("<matches query parameters, if any>")
                             val matchingUsers = LIST_USERS.filter { user ->
                                 (search.firstName == null || user.firstName == search.firstName) &&
-                                (search.location == null || user.location == search.location) &&
-                                (search.ageMin == null || user.age >= search.ageMin) &&
-                                (search.ageMax == null || user.age <= search.ageMax)
+                                        (search.location == null || user.location == search.location) &&
+                                        (search.ageMin == null || user.age >= search.ageMin) &&
+                                        (search.ageMax == null || user.age <= search.ageMax)
                             }
                             FriendsList(matchingUsers)
                         }

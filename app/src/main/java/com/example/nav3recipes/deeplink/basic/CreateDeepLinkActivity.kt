@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.parseintent.singleModule
+package com.example.nav3recipes.deeplink.basic
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,9 +9,47 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.example.nav3recipes.deeplink.basic.ui.DeepLinkButton
+import com.example.nav3recipes.deeplink.basic.ui.EMPTY
+import com.example.nav3recipes.deeplink.basic.ui.EntryScreen
+import com.example.nav3recipes.deeplink.basic.ui.FIRST_NAME_JOHN
+import com.example.nav3recipes.deeplink.basic.ui.FIRST_NAME_JULIE
+import com.example.nav3recipes.deeplink.basic.ui.FIRST_NAME_MARY
+import com.example.nav3recipes.deeplink.basic.ui.FIRST_NAME_TOM
+import com.example.nav3recipes.deeplink.basic.ui.LOCATION_BC
+import com.example.nav3recipes.deeplink.basic.ui.LOCATION_BR
+import com.example.nav3recipes.deeplink.basic.ui.LOCATION_CA
+import com.example.nav3recipes.deeplink.basic.ui.LOCATION_US
+import com.example.nav3recipes.deeplink.basic.ui.MenuDropDown
+import com.example.nav3recipes.deeplink.basic.ui.MenuTextInput
+import com.example.nav3recipes.deeplink.basic.ui.PATH_BASE
+import com.example.nav3recipes.deeplink.basic.ui.PATH_INCLUDE
+import com.example.nav3recipes.deeplink.basic.ui.PATH_SEARCH
+import com.example.nav3recipes.deeplink.basic.ui.STRING_LITERAL_HOME
+import com.example.nav3recipes.deeplink.basic.ui.SearchKey
+import com.example.nav3recipes.deeplink.basic.ui.TextContent
+import com.example.nav3recipes.deeplink.basic.ui.HomeKey
+import com.example.nav3recipes.deeplink.basic.ui.UsersKey
 
 /**
- * This activity allows the user to create a deep link and make a request with it
+ * This activity allows the user to create a deep link and make a request with it.
+ *
+ * **HOW THIS RECIPE WORKS** it consists of two activities - [CreateDeepLinkActivity] to construct
+ * and trigger the deeplink request, and the [MainActivity] to show how an app can handle
+ * that request.
+ *
+ * **DEMONSTRATED FORMS OF DEEPLINK** The [MainActivity] has a several backStack keys to
+ * demonstrate different types of supported deeplinks:
+ * 1. [HomeKey] - deeplink with an exact url (no deeplink arguments)
+ * 2. [UsersKey] - deeplink with path arguments
+ * 3. [SearchKey] - deeplink with query arguments
+ * See [MainActivity.deepLinkPatterns] for the actual url pattern of each.
+ *
+ * **RECIPE STRUCTURE** This recipe consists of three main packages:
+ * 1. basic.deeplink - Contains the two activities
+ * 2. basic.deeplink.ui - Contains the activity UI code, i.e. Screens, global string variables etc
+ * 3. basic.deeplink.deeplinkutil - Contains the classes and helper methods to parse and match
+ * the deeplinks
  *
  * See [MainActivity] for how the requested deeplink is handled.
  */
@@ -24,7 +62,7 @@ class CreateDeepLinkActivity : ComponentActivity() {
              * UI for deeplink sandbox
              */
             EntryScreen("Sandbox - Build Your Deeplink") {
-                TextContent("Base url:\n$PATH_BASE/")
+                TextContent("Base url:\n${PATH_BASE}/")
                 var showFilterOptions by remember { mutableStateOf(false) }
                 val selectedPath = remember { mutableStateOf(MENU_OPTIONS_PATH[KEY_PATH]?.first()) }
 
@@ -42,10 +80,12 @@ class CreateDeepLinkActivity : ComponentActivity() {
                             showQueryOptions = true
                             showFilterOptions = false
                         }
+
                         PATH_INCLUDE -> {
                             showQueryOptions = false
                             showFilterOptions = true
                         }
+
                         else -> {
                             showQueryOptions = false
                             showFilterOptions = false
@@ -64,7 +104,7 @@ class CreateDeepLinkActivity : ComponentActivity() {
                 if (showFilterOptions) {
                     MenuDropDown(
                         menuOptions = MENU_OPTIONS_FILTER,
-                    )  { _, selected ->
+                    ) { _, selected ->
                         selectedFilter = selected
                     }
                 }
@@ -104,9 +144,10 @@ class CreateDeepLinkActivity : ComponentActivity() {
                             }
                         }
                     }
+
                     else -> ""
                 }
-                val finalUrl = "$PATH_BASE/${selectedPath.value}$arguments"
+                val finalUrl = "${PATH_BASE}/${selectedPath.value}$arguments"
                 TextContent("Final url:\n$finalUrl")
                 // deeplink to target
                 DeepLinkButton(
@@ -133,7 +174,13 @@ private val MENU_OPTIONS_FILTER = mapOf(
 )
 
 private val MENU_OPTIONS_SEARCH = mapOf(
-    SearchKey::firstName.name to listOf(EMPTY, FIRST_NAME_JOHN, FIRST_NAME_TOM, FIRST_NAME_MARY, FIRST_NAME_JULIE),
+    SearchKey::firstName.name to listOf(
+        EMPTY,
+        FIRST_NAME_JOHN,
+        FIRST_NAME_TOM,
+        FIRST_NAME_MARY,
+        FIRST_NAME_JULIE
+    ),
     SearchKey::location.name to listOf(EMPTY, LOCATION_CA, LOCATION_BC, LOCATION_BR, LOCATION_US)
 )
 

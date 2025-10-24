@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.parseintent.singleModule
+package com.example.nav3recipes.deeplink.basic.ui
 
 /**
  * String resources

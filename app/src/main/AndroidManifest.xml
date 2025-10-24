@@ -141,12 +141,12 @@
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes"/>
         <activity
-            android:name=".deeplink.parseintent.singleModule.CreateDeepLinkActivity"
+            android:name=".deeplink.basic.CreateDeepLinkActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
         </activity>
         <activity
-            android:name=".deeplink.parseintent.singleModule.MainActivity"
+            android:name=".deeplink.basic.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
             <intent-filter android:autoVerify="true">

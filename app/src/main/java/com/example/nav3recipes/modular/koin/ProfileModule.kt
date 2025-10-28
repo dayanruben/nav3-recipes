@@ -11,33 +11,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation3.runtime.entry
-import com.example.nav3recipes.modular.hilt.EntryProviderInstaller
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
-import dagger.multibindings.IntoSet
+import org.koin.dsl.module
 
 // API
 object Profile
 
-// IMPLEMENTATION
-//@Module
-//@InstallIn(ActivityRetainedComponent::class)
-//object ProfileModule {
-//
-//    @IntoSet
-//    @Provides
-//    fun provideEntryProviderInstaller() : EntryProviderInstaller = {
-//        entry<Profile>{
-//            ProfileScreen()
-//        }
-//    }
-//}
+val profileModule = module {
+    scope<KoinModularActivity> {
+        navigation<Profile> {
+            ProfileScreen()
+        }
+    }
+}
 
 @Composable
-fun ProfileScreen() {
+private fun ProfileScreen() {
     val profileColor = MaterialTheme.colorScheme.surfaceVariant
     Column(
         modifier = Modifier

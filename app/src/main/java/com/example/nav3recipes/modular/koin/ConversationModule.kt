@@ -20,16 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation3.runtime.entry
-import com.example.nav3recipes.modular.hilt.EntryProviderInstaller
-import com.example.nav3recipes.modular.hilt.Navigator
-import com.example.nav3recipes.modular.hilt.Profile
 import com.example.nav3recipes.ui.theme.colors
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
-import dagger.multibindings.IntoSet
+import org.koin.dsl.module
 
 // API
 object ConversationList
@@ -38,30 +30,26 @@ data class ConversationDetail(val id: Int) {
         get() = colors[id % colors.size]
 }
 
-// IMPL
-//@Module
-//@InstallIn(ActivityRetainedComponent::class)
-//object ConversationModule {
-//
-//    @IntoSet
-//    @Provides
-//    fun provideEntryProviderInstaller(navigator: Navigator): EntryProviderInstaller =
-//        {
-//            entry<ConversationList> {
-//                ConversationListScreen(
-//                    onConversationClicked = { conversationDetail ->
-//                        navigator.goTo(conversationDetail)
-//                    }
-//                )
-//            }
-//            entry<ConversationDetail> { key ->
-//                ConversationDetailScreen(key) { navigator.goTo(Profile) }
-//            }
-//        }
-//}
+val conversationModule = module {
+    scope<KoinModularActivity> {
+        navigation<ConversationList> {
+            ConversationListScreen(
+                onConversationClicked = { conversationDetail ->
+                    navigator().goTo(conversationDetail)
+                }
+            )
+        }
+
+        navigation<ConversationDetail> { key ->
+            ConversationDetailScreen(key) {
+                navigator().goTo(com.example.nav3recipes.modular.koin.Profile)
+            }
+        }
+    }
+}
 
 @Composable
-fun ConversationListScreen(
+private fun ConversationListScreen(
     onConversationClicked: (ConversationDetail) -> Unit
 ) {
     LazyColumn(
@@ -91,7 +79,7 @@ fun ConversationListScreen(
 }
 
 @Composable
-fun ConversationDetailScreen(
+private fun ConversationDetailScreen(
     conversationDetail: ConversationDetail,
     onProfileClicked: () -> Unit
 ) {

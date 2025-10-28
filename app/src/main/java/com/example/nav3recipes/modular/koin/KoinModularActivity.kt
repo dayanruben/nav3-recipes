@@ -1,5 +1,6 @@
 package com.example.nav3recipes.modular.koin
 
+import android.content.ComponentCallbacks
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,14 +8,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import com.example.nav3recipes.modular.hilt.EntryProviderInstaller
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.getKoin
+import org.koin.android.ext.android.getKoinScope
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.activityRetainedScope
+import org.koin.compose.getKoin
+import org.koin.core.annotation.KoinInternalApi
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.parameter.ParametersDefinition
+import org.koin.core.qualifier.Qualifier
 import org.koin.core.scope.Scope
 import org.koin.mp.KoinPlatform
 
@@ -32,10 +42,24 @@ import org.koin.mp.KoinPlatform
  * The app module creates the navigator by supplying a start destination and provides this navigator
  * to the rest of the app module (i.e. MainActivity) and the feature modules.
  */
+
+typealias EntryProvider = (Any) -> NavEntry<Any>
+
+@OptIn(KoinInternalApi::class)
+inline fun ComponentCallbacks.entryProvider(
+    mode: LazyThreadSafetyMode = LazyThreadSafetyMode.SYNCHRONIZED,
+) : Lazy<EntryProvider> = lazy(mode) { val entries = getKoinScope().getAll<EntryProviderInstaller>()
+    val entryProvider: (Any) -> NavEntry<Any> = entryProvider {
+        entries.forEach { builder -> this.builder() }
+    }
+    entryProvider
+}
+
 class KoinModularActivity : ComponentActivity(), AndroidScopeComponent {
+
     override val scope : Scope by activityRetainedScope()
     val navigator: Navigator by inject()
-    val entryProvider: (Any) -> NavEntry<Any> by inject()
+    val entryProvider : EntryProvider by entryProvider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

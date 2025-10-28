@@ -55,11 +55,19 @@ inline fun ComponentCallbacks.entryProvider(
     entryProvider
 }
 
+@OptIn(KoinInternalApi::class)
+inline fun ComponentCallbacks.getEntryProvider() : EntryProvider {
+    val entries = getKoinScope().getAll<EntryProviderInstaller>()
+    val entryProvider: (Any) -> NavEntry<Any> = entryProvider {
+        entries.forEach { builder -> this.builder() }
+    }
+    return entryProvider
+}
+
 class KoinModularActivity : ComponentActivity(), AndroidScopeComponent {
 
     override val scope : Scope by activityRetainedScope()
     val navigator: Navigator by inject()
-    val entryProvider : EntryProvider by entryProvider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +89,7 @@ class KoinModularActivity : ComponentActivity(), AndroidScopeComponent {
                     backStack = navigator.backStack,
                     modifier = Modifier.padding(paddingValues),
                     onBack = { navigator.goBack() },
-                    entryProvider = entryProvider
+                    entryProvider = getEntryProvider()
                 )
             }
         }

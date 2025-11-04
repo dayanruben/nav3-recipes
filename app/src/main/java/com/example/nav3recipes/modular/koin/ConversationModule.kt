@@ -21,7 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.nav3recipes.ui.theme.colors
+import org.koin.androidx.scope.dsl.activityRetainedScope
+import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.module
+import org.koin.dsl.navigation3.navigation
 
 // API
 object ConversationList
@@ -30,19 +33,20 @@ data class ConversationDetail(val id: Int) {
         get() = colors[id % colors.size]
 }
 
+@OptIn(KoinExperimentalAPI::class)
 val conversationModule = module {
-    scope<KoinModularActivity> {
+    activityRetainedScope {
         navigation<ConversationList> {
             ConversationListScreen(
                 onConversationClicked = { conversationDetail ->
-                    navigator().goTo(conversationDetail)
+                    get<Navigator>().goTo(conversationDetail)
                 }
             )
         }
 
         navigation<ConversationDetail> { key ->
             ConversationDetailScreen(key) {
-                navigator().goTo(com.example.nav3recipes.modular.koin.Profile)
+                get<Navigator>().goTo(Profile)
             }
         }
     }

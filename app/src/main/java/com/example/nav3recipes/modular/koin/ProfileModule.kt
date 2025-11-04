@@ -11,16 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.koin.androidx.scope.dsl.activityRetainedScope
+import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.module
+import org.koin.dsl.navigation3.navigation
 
 // API
 object Profile
 
+@OptIn(KoinExperimentalAPI::class)
 val profileModule = module {
-    scope<KoinModularActivity> {
-        navigation<Profile> {
-            ProfileScreen()
-        }
+    activityRetainedScope {
+        navigation<Profile> { ProfileScreen() }
     }
 }
 

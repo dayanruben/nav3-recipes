@@ -25,7 +25,7 @@ Examples showing how to use the layouts provided by the [Compose Material3 Adapt
 - **[Animations](app/src/main/java/com/example/nav3recipes/animations)**: Shows how to override the default animations for all destinations and a single destination.
 
 ### Common use cases
-- **[Common navigation UI](app/src/main/java/com/example/nav3recipes/commonui)**: A common navigation toolbar where each item in the toolbar navigates to a top level destination.
+- **[Multiple back stacks / Common navigation UI](app/src/main/java/com/example/nav3recipes/commonui)**: Shows how to create multiple top level routes, each with its own back stack. Top level routes are displayed in a navigation bar allowing users to switch between them. State is retained for each top level route, and the navigation state persists config changes and process death.  
 - **[Conditional navigation](app/src/main/java/com/example/nav3recipes/conditional)**: Switch to a different navigation flow when a condition is met. For example, for authentication or first-time user onboarding.
 
 ### Architecture

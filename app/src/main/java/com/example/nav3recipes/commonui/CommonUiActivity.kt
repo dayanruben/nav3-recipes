@@ -81,9 +81,9 @@ class CommonUiActivity : ComponentActivity() {
             val entryProvider = entryProvider {
                 featureASection(onSubRouteClick = { navigator.navigate(RouteA1) })
                 featureBSection(onDetailClick = { id -> navigator.navigate(RouteB1(id)) })
-                featureCSection(onSubRouteClick = { navigator.navigate(RouteA1) })
-            }
                 featureCSection(onSubRouteClick = { navigator.navigate(RouteC1) })
+            }
+
             Scaffold(bottomBar = {
                 NavigationBar {
                     TOP_LEVEL_ROUTES.forEach { (key, value) ->

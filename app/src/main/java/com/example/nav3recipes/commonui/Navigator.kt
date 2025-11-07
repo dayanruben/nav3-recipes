@@ -27,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.navigation3.runtime.NavEntry
-import androidx.navigation3.runtime.NavEntryDecorator
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.savedstate.SavedState
@@ -58,16 +57,29 @@ fun rememberNavigator(
  * Navigator object that manages navigation state and provides `NavEntry`s for that state.
  */
 @SuppressLint("RestrictedApi")
-class Navigator(
+class Navigator private constructor(
     val startRoute: Route,
-    val topLevelRoutes: Set<Route>
+    val topLevelRoutes: Set<Route>,
+    initialTopLevelRoute: Route,
+    initialTopLevelStacks: Map<Route, List<Route>>
 ) {
 
-    var topLevelRoute by mutableStateOf(startRoute)
+    constructor(
+        startRoute: Route,
+        topLevelRoutes: Set<Route>
+    ) : this(
+        startRoute = startRoute,
+        topLevelRoutes = topLevelRoutes,
+        initialTopLevelRoute = startRoute,
+        initialTopLevelStacks = topLevelRoutes.associateWith { route -> listOf(route) }
+    )
+
+    var topLevelRoute by mutableStateOf(initialTopLevelRoute)
         private set
 
     // Maintain a stack for each top level route
-    val topLevelStacks = topLevelRoutes.associateWith { route -> mutableStateListOf(route) }.toMutableMap()
+    val topLevelStacks : Map<Route, SnapshotStateList<Route>> =
+        initialTopLevelStacks.mapValues { (_, values) -> values.toMutableStateList() }
 
     /**
      * Navigate to the given route.
@@ -108,7 +120,7 @@ class Navigator(
         val decoratedEntries = topLevelStacks.mapValues { (_, stack) ->
 
             val decorators = listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberSaveableStateHolderNavEntryDecorator<Route>(),
             )
 
             rememberDecoratedNavEntries(
@@ -160,6 +172,8 @@ class Navigator(
                 savedState.read {
                     val restoredStartRoute =
                         decodeFromSavedState<Route>(getSavedState(KEY_START_ROUTE))
+                    val restoredTopLevelRoute =
+                        decodeFromSavedState<Route>(getSavedState(KEY_TOP_LEVEL_ROUTE))
 
                     val topLevelRoutes = mutableSetOf<Route>()
                     val topLevelStacks = mutableMapOf<Route, List<Route>>()
@@ -174,19 +188,12 @@ class Navigator(
                             .map { decodeFromSavedState<Route>(it) }
                     }
                     
-                    val navigator = Navigator(
+                    Navigator(
                         startRoute = restoredStartRoute,
                         topLevelRoutes = topLevelRoutes,
+                        initialTopLevelRoute = restoredTopLevelRoute,
+                        initialTopLevelStacks = topLevelStacks,
                     )
-
-                    navigator.topLevelStacks.clear()
-                    topLevelStacks.forEach { (key, value) ->
-                        navigator.topLevelStacks[key] = value.toMutableStateList()
-                    }
-
-                    navigator.topLevelRoute =
-                        decodeFromSavedState(getSavedState(KEY_TOP_LEVEL_ROUTE))
-                    navigator
                 }
             }
         )

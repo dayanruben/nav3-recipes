@@ -107,7 +107,7 @@ class Navigator(
 
         val decoratedEntries = topLevelStacks.mapValues { (_, stack) ->
 
-            val decorators = listOf<NavEntryDecorator<Route>>(
+            val decorators = listOf(
                 rememberSaveableStateHolderNavEntryDecorator(),
             )
 

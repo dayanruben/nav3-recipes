@@ -52,6 +52,7 @@ import com.example.nav3recipes.dialog.DialogActivity
 import com.example.nav3recipes.material.listdetail.MaterialListDetailActivity
 import com.example.nav3recipes.material.supportingpane.MaterialSupportingPaneActivity
 import com.example.nav3recipes.modular.hilt.ModularActivity
+import com.example.nav3recipes.multiplestacks.MultipleStacksActivity
 import com.example.nav3recipes.passingarguments.viewmodels.basic.BasicViewModelsActivity
 import com.example.nav3recipes.passingarguments.viewmodels.hilt.HiltViewModelsActivity
 import com.example.nav3recipes.passingarguments.viewmodels.koin.KoinViewModelsActivity
@@ -92,6 +93,7 @@ private val recipes = listOf(
 
     Heading("Common use cases"),
     Recipe("Common UI", CommonUiActivity::class.java),
+    Recipe("Multiple Stacks", MultipleStacksActivity::class.java),
     Recipe("Conditional navigation", ConditionalActivity::class.java),
 
     Heading("Architecture"),

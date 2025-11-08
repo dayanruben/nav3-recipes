@@ -58,7 +58,6 @@ fun rememberNavigator(
 @SuppressLint("RestrictedApi")
 class Navigator private constructor(
     val startRoute: Route,
-    val topLevelRoutes: Set<Route>,
     initialTopLevelRoute: Route,
     initialTopLevelStacks: Map<Route, List<Route>>
 ) {
@@ -68,7 +67,6 @@ class Navigator private constructor(
         topLevelRoutes: Set<Route>
     ) : this(
         startRoute = startRoute,
-        topLevelRoutes = topLevelRoutes,
         initialTopLevelRoute = startRoute,
         initialTopLevelStacks = topLevelRoutes.associateWith { route -> listOf(route) }
     )
@@ -189,7 +187,6 @@ class Navigator private constructor(
                     
                     Navigator(
                         startRoute = restoredStartRoute,
-                        topLevelRoutes = topLevelRoutes,
                         initialTopLevelRoute = restoredTopLevelRoute,
                         initialTopLevelStacks = topLevelStacks,
                     )

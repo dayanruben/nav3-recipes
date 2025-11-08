@@ -25,6 +25,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import com.example.nav3recipes.content.ContentGreen
 import com.example.nav3recipes.content.ContentMauve
 import com.example.nav3recipes.content.ContentOrange
@@ -32,7 +33,7 @@ import com.example.nav3recipes.content.ContentPink
 import com.example.nav3recipes.content.ContentPurple
 import com.example.nav3recipes.content.ContentRed
 
-fun EntryProviderScope<Route>.featureASection(
+fun EntryProviderScope<NavKey>.featureASection(
     onSubRouteClick: () -> Unit,
 ) {
     entry<RouteA> {
@@ -57,7 +58,7 @@ fun EntryProviderScope<Route>.featureASection(
     }
 }
 
-fun EntryProviderScope<Route>.featureBSection(
+fun EntryProviderScope<NavKey>.featureBSection(
     onDetailClick: (id: String) -> Unit,
 ) {
     entry<RouteB> {
@@ -81,7 +82,7 @@ fun EntryProviderScope<Route>.featureBSection(
     }
 }
 
-fun EntryProviderScope<Route>.featureCSection(
+fun EntryProviderScope<NavKey>.featureCSection(
     onSubRouteClick: () -> Unit,
 ) {
     entry<RouteC> {

@@ -1,17 +1,14 @@
-# Common navigation UI / Multiple back stacks recipe #
+# Multiple back stacks recipe #
 
-This recipe demonstrates how to create top level routes with their own back stack. 
+This recipe demonstrates how to create multiple back stacks. 
 
 The app has three top level routes: `RouteA`, `RouteB` and `RouteC`. These routes have sub routes `RouteA1`, `RouteB1` and `RouteC1` respectively. The content for the sub routes is a counter that can be used to verify state retention through configuration changes and process death.
 
-The app's navigation state is managed by the `Navigator` class. This maintains a back stack for each top level route and holds the logic for navigating within and between these back stacks. 
+The app's navigation state is held in the `NavigationState` class. The state itself is created using `rememberNavigationState`. 
 
-The state for each `NavEntry` is retained while its key is in the associated back stack. This means that even when the top level route changes, the state for entries in other back stacks will be retained. 
+Navigation events are handled by the `Navigator`. It updates the navigation state.
 
-The `Navigator` class is split into two areas of responsibility: 
-
-- **Managing navigation state**. This is done in pure Kotlin, no Composable functions. A `Saver` allows the navigation state to be saved and restored.
-- **Providing UI**. The `NavEntry`s for the current navigation state are provided using the `entries` Composable function. This can be used directly with `NavDisplay`.
+The navigation state is converted into `NavEntry`s with `NavigationState.toEntries`. These entries are then displayed by `NavDisplay`. 
 
 Key behaviors: 
 

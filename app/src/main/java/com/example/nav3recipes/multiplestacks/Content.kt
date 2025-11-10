@@ -37,7 +37,7 @@ fun EntryProviderScope<NavKey>.featureASection(
     onSubRouteClick: () -> Unit,
 ) {
     entry<RouteA> {
-        ContentRed("Route A title") {
+        ContentRed("Route A") {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(onClick = onSubRouteClick) {
                     Text("Go to A1")
@@ -46,7 +46,7 @@ fun EntryProviderScope<NavKey>.featureASection(
         }
     }
     entry<RouteA1> {
-        ContentPink("Route A1 title") {
+        ContentPink("Route A1") {
             var count by rememberSaveable {
                 mutableIntStateOf(0)
             }
@@ -59,19 +59,19 @@ fun EntryProviderScope<NavKey>.featureASection(
 }
 
 fun EntryProviderScope<NavKey>.featureBSection(
-    onDetailClick: (id: String) -> Unit,
+    onSubRouteClick: (id: String) -> Unit,
 ) {
     entry<RouteB> {
-        ContentGreen("Route B title") {
+        ContentGreen("Route B") {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = { onDetailClick("ABC") }) {
+                Button(onClick = { onSubRouteClick("ABC") }) {
                     Text("Go to B1")
                 }
             }
         }
     }
-    entry<RouteB1> { key ->
-        ContentPurple("Route B1 title. ID: ${key.id}") {
+    entry<RouteB1> {
+        ContentPurple("Route B1") {
             var count by rememberSaveable {
                 mutableIntStateOf(0)
             }
@@ -86,7 +86,7 @@ fun EntryProviderScope<NavKey>.featureCSection(
     onSubRouteClick: () -> Unit,
 ) {
     entry<RouteC> {
-        ContentMauve("Route C title") {
+        ContentMauve("Route C") {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(onClick = onSubRouteClick) {
                     Text("Open sub route")
@@ -95,7 +95,7 @@ fun EntryProviderScope<NavKey>.featureCSection(
         }
     }
     entry<RouteC1> {
-        ContentOrange("Route C1 title") {
+        ContentOrange("Route C1") {
             var count by rememberSaveable {
                 mutableIntStateOf(0)
             }

@@ -29,30 +29,14 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSerializable
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation3.runtime.NavBackStack
-import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.runtime.rememberDecoratedNavEntries
-import androidx.navigation3.runtime.rememberNavBackStack
-import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
-import androidx.navigation3.runtime.serialization.NavKeySerializer
 import androidx.navigation3.ui.NavDisplay
-import androidx.savedstate.compose.serialization.serializers.MutableStateSerializer
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 import kotlinx.serialization.Serializable
-import kotlin.collections.last
 
 
 @Serializable
@@ -65,7 +49,7 @@ data object RouteA1 : NavKey
 data object RouteB : NavKey
 
 @Serializable
-data class RouteB1(val id: String) : NavKey
+data object RouteB1 : NavKey
 
 @Serializable
 data object RouteC : NavKey
@@ -98,7 +82,7 @@ class MultipleStacksActivity : ComponentActivity() {
 
             val entryProvider = entryProvider {
                 featureASection(onSubRouteClick = { navigator.navigate(RouteA1) })
-                featureBSection(onDetailClick = { id -> navigator.navigate(RouteB1(id)) })
+                featureBSection(onSubRouteClick = { id -> navigator.navigate(RouteB1) })
                 featureCSection(onSubRouteClick = { navigator.navigate(RouteC1) })
             }
 
@@ -129,100 +113,3 @@ class MultipleStacksActivity : ComponentActivity() {
         }
     }
 }
-
-/**
- * Convert NavigationState into NavEntries.
- */
-@Composable
-fun NavigationState.toEntries(
-    entryProvider: (NavKey) -> NavEntry<NavKey>
-): SnapshotStateList<NavEntry<NavKey>> {
-
-    val decoratedEntries = backStacks.mapValues { (_, stack) ->
-        val decorators = listOf(
-            rememberSaveableStateHolderNavEntryDecorator<NavKey>(),
-        )
-        rememberDecoratedNavEntries(
-            backStack = stack,
-            entryDecorators = decorators,
-            entryProvider = entryProvider
-        )
-    }
-
-    return stacksInUse
-        .flatMap { decoratedEntries[it] ?: emptyList() }
-        .toMutableStateList()
-}
-
-/**
- * Handles navigation events (forward and back) by updating the navigation state.
- */
-class Navigator(val state: NavigationState){
-    fun navigate(route: NavKey){
-        if (route in state.backStacks.keys){
-            // This is a top level route, just switch to it
-            state.topLevelRoute = route
-        } else {
-            state.backStacks[state.topLevelRoute]?.add(route)
-        }
-    }
-    
-    fun goBack(){
-        
-        val currentStack = state.backStacks[state.topLevelRoute] ?:
-            error("Stack for $state.topLevelRoute not found")
-        val currentRoute = currentStack.last()
-
-        // If we're at the base of the current route, go back to the start route stack.
-        if (currentRoute == state.topLevelRoute){
-            state.topLevelRoute = state.startRoute
-        } else {
-            currentStack.removeLast()
-        }
-    }
-}
-
-/**
- * Create a navigation state that persists config changes and process death.
- */
-@Composable 
-fun rememberNavigationState(
-    startRoute: NavKey,
-    topLevelRoutes: Set<NavKey>
-) : NavigationState {
-
-    val topLevelRoute = rememberSerializable(
-        serializer = MutableStateSerializer(NavKeySerializer())
-    ){
-        mutableStateOf(startRoute)
-    }
-
-    return NavigationState(
-        topLevelRoute = topLevelRoute,
-        backStacks = topLevelRoutes.associateWith { key ->
-            rememberNavBackStack(key)
-        }
-    )
-}
-
-/**
- * State holder for navigation state.
- *
- * @param topLevelRoute - the current top level route
- * @param backStacks - the back stacks for each top level route
- */
-class NavigationState(
-    topLevelRoute: MutableState<NavKey>,
-    val backStacks: Map<NavKey, NavBackStack<NavKey>>
-) {
-    val startRoute = topLevelRoute.value
-    var topLevelRoute : NavKey by topLevelRoute
-    val stacksInUse : List<NavKey>
-        get(){
-            val stacksInUse = mutableListOf(startRoute)
-            if (this@NavigationState.topLevelRoute != startRoute) stacksInUse += this@NavigationState.topLevelRoute
-            return stacksInUse
-        }
-}
-
-

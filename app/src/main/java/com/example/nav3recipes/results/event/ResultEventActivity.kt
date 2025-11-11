@@ -35,13 +35,6 @@ import com.example.nav3recipes.results.common.Person
 import com.example.nav3recipes.results.common.PersonDetailsForm
 import com.example.nav3recipes.results.common.PersonDetailsScreen
 
-/**
- * This recipe demonstrates passing an event result to a previous screen. It does this by:
- *
- * - Providing a [ResultEventBus]
- * - Implementing a [ResultEffect] in the receiving screen
- * - Calling [ResultEventBus.sendResult] from the sending screen.
- */
 class ResultEventActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -36,16 +36,6 @@ import com.example.nav3recipes.content.ContentGreen
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 import kotlinx.serialization.Serializable
 
-/**
- * This recipe demonstrates how to create a bottom sheet. It does this by:
- *
- * - Adding the `BottomSheetSceneStrategy` to the list of strategies used by `NavDisplay`.
- * - Adding `BottomSheetSceneStrategy.bottomSheet()` to a `NavEntry`'s metadata to indicate that it
- * is a bottom sheet. In this case it is applied to the `NavEntry` for `RouteB`.
- *
- * See also https://developer.android.com/guide/navigation/navigation-3/custom-layouts
- */
-
 @Serializable
 private data object RouteA : NavKey
 

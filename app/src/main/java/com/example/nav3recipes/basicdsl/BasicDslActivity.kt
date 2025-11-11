@@ -30,10 +30,6 @@ import com.example.nav3recipes.content.ContentGreen
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 import kotlinx.serialization.Serializable
 
-/**
- * Basic example with two screens that uses the entryProvider DSL and has a persistent back stack.
- */
-
 @Serializable
 private data object RouteA : NavKey
 

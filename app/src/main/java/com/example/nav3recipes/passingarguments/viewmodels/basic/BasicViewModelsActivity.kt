@@ -36,11 +36,6 @@ import com.example.nav3recipes.content.ContentBlue
 import com.example.nav3recipes.content.ContentGreen
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 
-/**
- * Passing navigation arguments to a ViewModel.
- *
- * - ViewModelStoreNavEntryDecorator ensures that ViewModels are scoped to the NavEntry
- */
 data object RouteA
 
 data class RouteB(val id: String)

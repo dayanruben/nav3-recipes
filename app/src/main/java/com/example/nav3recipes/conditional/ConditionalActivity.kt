@@ -33,16 +33,6 @@ import com.example.nav3recipes.content.ContentBlue
 import com.example.nav3recipes.content.ContentGreen
 import com.example.nav3recipes.content.ContentYellow
 
-/**
- * Conditional navigation recipe.
- *
- * In this app we have a destination, Profile, that can only be
- * accessed once the user has logged in. If they attempt to access the Profile destination when
- * they're not logged in, they are redirected to the Login destination. Their ultimate destination,
- * Profile, is saved. Once they're logged in, they're taken to the Profile destination.
- *
- */
-
 private data object Home
 
 // A marker interface is used to mark any routes that require login

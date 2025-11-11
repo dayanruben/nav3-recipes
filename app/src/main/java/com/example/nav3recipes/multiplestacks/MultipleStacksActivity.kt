@@ -82,7 +82,7 @@ class MultipleStacksActivity : ComponentActivity() {
 
             val entryProvider = entryProvider {
                 featureASection(onSubRouteClick = { navigator.navigate(RouteA1) })
-                featureBSection(onSubRouteClick = { id -> navigator.navigate(RouteB1) })
+                featureBSection(onSubRouteClick = { navigator.navigate(RouteB1) })
                 featureCSection(onSubRouteClick = { navigator.navigate(RouteC1) })
             }
 

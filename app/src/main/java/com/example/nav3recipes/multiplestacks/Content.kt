@@ -59,12 +59,12 @@ fun EntryProviderScope<NavKey>.featureASection(
 }
 
 fun EntryProviderScope<NavKey>.featureBSection(
-    onSubRouteClick: (id: String) -> Unit,
+    onSubRouteClick: () -> Unit,
 ) {
     entry<RouteB> {
         ContentGreen("Route B") {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = { onSubRouteClick("ABC") }) {
+                Button(onClick = onSubRouteClick) {
                     Text("Go to B1")
                 }
             }
@@ -89,7 +89,7 @@ fun EntryProviderScope<NavKey>.featureCSection(
         ContentMauve("Route C") {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(onClick = onSubRouteClick) {
-                    Text("Open sub route")
+                    Text("Go to C1")
                 }
             }
         }

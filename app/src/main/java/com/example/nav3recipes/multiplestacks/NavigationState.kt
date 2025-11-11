@@ -43,7 +43,7 @@ class NavigationState(
     val stacksInUse : List<NavKey>
         get(){
             val stacksInUse = mutableListOf(startRoute)
-            if (this@NavigationState.topLevelRoute != startRoute) stacksInUse += this@NavigationState.topLevelRoute
+            if (topLevelRoute != startRoute) stacksInUse += topLevelRoute
             return stacksInUse
         }
 }

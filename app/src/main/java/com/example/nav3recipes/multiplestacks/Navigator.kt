@@ -16,36 +16,7 @@
 
 package com.example.nav3recipes.multiplestacks
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.navigation3.runtime.NavKey
-import androidx.navigation3.runtime.rememberNavBackStack
-import androidx.navigation3.runtime.serialization.NavKeySerializer
-import androidx.savedstate.compose.serialization.serializers.MutableStateSerializer
-
-/**
- * Create a navigation state that persists config changes and process death.
- */
-@Composable
-fun rememberNavigationState(
-    startRoute: NavKey,
-    topLevelRoutes: Set<NavKey>
-) : NavigationState {
-
-    val topLevelRoute = rememberSerializable(
-        serializer = MutableStateSerializer(NavKeySerializer())
-    ){
-        mutableStateOf<NavKey>(startRoute)
-    }
-
-    return NavigationState(
-        topLevelRoute = topLevelRoute,
-        backStacks = topLevelRoutes.associateWith { key ->
-            rememberNavBackStack(key)
-        }
-    )
-}
 
 /**
  * Handles navigation events (forward and back) by updating the navigation state.
@@ -74,5 +45,3 @@ class Navigator(val state: NavigationState){
         }
     }
 }
-
-

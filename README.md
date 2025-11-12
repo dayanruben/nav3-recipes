@@ -65,7 +65,7 @@ If the issue is _directly related to this project_, as in, it's reproducible wit
 We'd love to accept your contributions. Please follow [these instructions](CONTRIBUTING.md).
 
 ## Compose Multiplatform Recipes
-CMP recipes can be found [here](https://github.com/terrakok/nav3-recipes) repository.
+CMP recipes can be found [here](https://github.com/terrakok/nav3-recipes).
 
 ## License
 ```

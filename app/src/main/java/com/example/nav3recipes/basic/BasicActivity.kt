@@ -29,10 +29,6 @@ import com.example.nav3recipes.content.ContentBlue
 import com.example.nav3recipes.content.ContentGreen
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 
-/**
- * Basic example with two screens, showing how to use the Navigation 3 API.
- */
-
 private data object RouteA
 
 private data class RouteB(val id: String)

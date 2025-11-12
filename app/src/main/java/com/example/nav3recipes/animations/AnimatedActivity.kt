@@ -25,11 +25,6 @@ import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 import kotlinx.serialization.Serializable
 
 
-/**
- * This recipe shows how to override the default animations at the `NavDisplay` level, and at the
- * individual destination level, shown for `ScreenC`.
- *
- */
 @Serializable
 private data object ScreenA : NavKey
 

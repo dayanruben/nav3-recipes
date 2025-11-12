@@ -41,11 +41,6 @@ import com.example.nav3recipes.content.ContentRed
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 import kotlinx.serialization.Serializable
 
-/**
- * This example uses the Material SupportingPaneSceneStrategy to create an adaptive scene. It has three
- * destinations: Content, RelatedContent and Profile. When the window width allows it,
- * the content for these destinations will be shown in a two pane layout.
- */
 @Serializable
 private object MainVideo : NavKey
 

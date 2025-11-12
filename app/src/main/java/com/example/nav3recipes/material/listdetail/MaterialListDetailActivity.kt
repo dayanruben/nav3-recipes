@@ -41,11 +41,6 @@ import com.example.nav3recipes.content.ContentYellow
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 import kotlinx.serialization.Serializable
 
-/**
- * This example uses the Material ListDetailSceneStrategy to create an adaptive scene. It has three
- * destinations: ConversationList, ConversationDetail and Profile. When the window width allows it,
- * the content for these destinations will be shown in a two pane layout.
- */
 @Serializable
 private object ConversationList : NavKey
 

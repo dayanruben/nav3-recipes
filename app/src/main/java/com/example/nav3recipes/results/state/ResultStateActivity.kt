@@ -34,13 +34,6 @@ import com.example.nav3recipes.results.common.Person
 import com.example.nav3recipes.results.common.PersonDetailsForm
 import com.example.nav3recipes.results.common.PersonDetailsScreen
 
-/**
- * This recipe demonstrates passing an state result to a previous screen. It does this by:
- *
- * - Providing a [ResultStore]
- * - Calling [ResultStore.getResultState] in the receiving screen
- * - Calling [ResultStore.setResult] from the sending screen.
- */
 class ResultStateActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

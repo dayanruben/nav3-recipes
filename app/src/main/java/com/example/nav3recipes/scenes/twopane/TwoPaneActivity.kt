@@ -37,18 +37,6 @@ import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 import com.example.nav3recipes.ui.theme.colors
 import kotlinx.serialization.Serializable
 
-/**
- * This example shows how to create custom layouts using the Scenes API.
- *
- * A custom Scene, `TwoPaneScene`, will render content in two panes if:
- *
- * - the window width is over 600dp
- * - the last two nav entries on the back stack have indicated that they support being displayed in
- * a `TwoPaneScene` in their metadata.
- *
- *
- * @see `TwoPaneScene`
- */
 @Serializable
 private object Home : NavKey
 

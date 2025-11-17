@@ -10,12 +10,16 @@ import androidx.navigation3.ui.NavDisplay
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.compose.navigation3.getEntryProvider
 import org.koin.androidx.scope.activityRetainedScope
+import org.koin.androidx.scope.activityScope
 import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.logger.Level
 import org.koin.core.scope.Scope
 import org.koin.mp.KoinPlatform
 
@@ -42,15 +46,7 @@ class KoinModularActivity : ComponentActivity(), AndroidScopeComponent {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //prevent any already launched Koin instance with other config
-        if (KoinPlatform.getKoinOrNull() != null) {
-            stopKoin()
-        }
-        // The startKoin block should be placed in Application.onCreate.
-        startKoin {
-            androidContext(this@KoinModularActivity)
-            modules(appModule)
-        }
+        initKoin()
 
         setEdgeToEdgeConfig()
         setContent {
@@ -61,6 +57,17 @@ class KoinModularActivity : ComponentActivity(), AndroidScopeComponent {
                     onBack = { navigator.goBack() },
                     entryProvider = getEntryProvider()
                 )
+            }
+        }
+    }
+
+    private fun initKoin() {
+        if (KoinPlatform.getKoinOrNull() == null) {
+            // The startKoin block should be placed in Application.onCreate.
+            startKoin {
+                androidContext(this@KoinModularActivity)
+                androidLogger(Level.DEBUG)
+                modules(appModule)
             }
         }
     }

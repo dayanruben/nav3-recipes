@@ -41,7 +41,7 @@ class Navigator(val state: NavigationState){
         if (currentRoute == state.topLevelRoute){
             state.topLevelRoute = state.startRoute
         } else {
-            currentStack.removeLast()
+            currentStack.removeLastOrNull()
         }
     }
 }

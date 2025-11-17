@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -40,35 +41,39 @@ import androidx.savedstate.compose.serialization.serializers.MutableStateSeriali
 fun rememberNavigationState(
     startRoute: NavKey,
     topLevelRoutes: Set<NavKey>
-) : NavigationState {
+): NavigationState {
 
     val topLevelRoute = rememberSerializable(
         serializer = MutableStateSerializer(NavKeySerializer())
-    ){
+    ) {
         mutableStateOf(startRoute)
     }
 
-    return NavigationState(
-        topLevelRoute = topLevelRoute,
-        backStacks = topLevelRoutes.associateWith { key ->
-            rememberNavBackStack(key)
-        }
-    )
+    val backStacks = topLevelRoutes.associateWith { key -> rememberNavBackStack(key) }
+
+    return remember {
+        NavigationState(
+            startRoute = startRoute,
+            topLevelRoute = topLevelRoute,
+            backStacks = backStacks
+        )
+    }
 }
 
 /**
  * State holder for navigation state.
  *
+ * @param startRoute - the start route. The user will exit the app through this route.
  * @param topLevelRoute - the current top level route
  * @param backStacks - the back stacks for each top level route
  */
 class NavigationState(
+    val startRoute: NavKey,
     topLevelRoute: MutableState<NavKey>,
     val backStacks: Map<NavKey, NavBackStack<NavKey>>
 ) {
-    val startRoute = topLevelRoute.value
-    var topLevelRoute : NavKey by topLevelRoute
-    val stacksInUse : List<NavKey>
+    var topLevelRoute: NavKey by topLevelRoute
+    val stacksInUse: List<NavKey>
         get(){
             val stacksInUse = mutableListOf(startRoute)
             if (topLevelRoute != startRoute) stacksInUse += topLevelRoute

@@ -27,12 +27,6 @@ import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 import org.koin.mp.KoinPlatform
 
-/**
- * Passing navigation arguments to a Koin injected ViewModel
- *
- * - ViewModelStoreNavEntryDecorator ensures that ViewModels are scoped to the NavEntry
- */
-
 data object RouteA
 data class RouteB(val id: String)
 

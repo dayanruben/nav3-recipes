@@ -19,12 +19,10 @@ package com.example.nav3recipes.scenes.twopane
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavBackStack
@@ -39,18 +37,6 @@ import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 import com.example.nav3recipes.ui.theme.colors
 import kotlinx.serialization.Serializable
 
-/**
- * This example shows how to create custom layouts using the Scenes API.
- *
- * A custom Scene, `TwoPaneScene`, will render content in two panes if:
- *
- * - the window width is over 600dp
- * - the last two nav entries on the back stack have indicated that they support being displayed in
- * a `TwoPaneScene` in their metadata.
- *
- *
- * @see `TwoPaneScene`
- */
 @Serializable
 private object Home : NavKey
 
@@ -62,7 +48,6 @@ private data object Profile : NavKey
 
 class TwoPaneActivity : ComponentActivity() {
 
-    @OptIn(ExperimentalSharedTransitionApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         setEdgeToEdgeConfig()
         super.onCreate(savedInstanceState)

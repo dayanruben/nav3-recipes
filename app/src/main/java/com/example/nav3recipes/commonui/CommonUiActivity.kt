@@ -44,19 +44,6 @@ import com.example.nav3recipes.content.ContentPurple
 import com.example.nav3recipes.content.ContentRed
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 
-/**
- * Common navigation UI example. This app has three top level routes: Home, ChatList and Camera.
- * ChatList has a sub-route: ChatDetail.
- *
- * The app back stack state is modeled in `TopLevelBackStack`. This creates a back stack for each
- * top level route. It flattens those maps to create a single back stack for `NavDisplay`. This allows
- * `NavDisplay` to know where to go back to.
- *
- * Note that in this example, the Home route can move above the ChatList and Camera routes, meaning
- * navigating back from Home doesn't necessarily leave the app. The app will exit when the user goes
- * back from a single remaining top level route in the back stack.
- */
-
 private sealed interface TopLevelRoute {
     val icon: ImageVector
 }

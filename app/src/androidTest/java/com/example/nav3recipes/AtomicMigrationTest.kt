@@ -8,7 +8,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.espresso.Espresso
-import com.example.nav3recipes.migration.atomic.test.StartAtomicMigrationActivity
+import com.example.nav3recipes.migration.atomic.begin.BeginAtomicMigrationActivity
+import com.example.nav3recipes.migration.atomic.end.EndAtomicMigrationActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,8 +30,8 @@ class AtomicMigrationTest(activityClass: Class<out ComponentActivity>) {
         @Parameters(name = "{0}")
         fun data(): Collection<Array<Any>> {
             return listOf(
-                arrayOf(StartAtomicMigrationActivity::class.java),
-                //arrayOf(Step2AtomicMigrationActivity::class.java)
+                arrayOf(BeginAtomicMigrationActivity::class.java),
+                arrayOf(EndAtomicMigrationActivity::class.java)
             )
         }
     }

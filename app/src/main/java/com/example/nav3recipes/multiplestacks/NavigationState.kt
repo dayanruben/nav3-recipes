@@ -75,11 +75,12 @@ class NavigationState(
 ) {
     var topLevelRoute: NavKey by topLevelRoute
     val stacksInUse: List<NavKey>
-        get(){
-            val stacksInUse = mutableListOf(startRoute)
-            if (topLevelRoute != startRoute) stacksInUse += topLevelRoute
-            return stacksInUse
+        get() = if (topLevelRoute == startRoute) {
+            listOf(startRoute)
+        } else {
+            listOf(startRoute, topLevelRoute)
         }
+
 }
 
 /**

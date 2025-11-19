@@ -8,13 +8,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.espresso.Espresso
-import com.example.nav3recipes.migration.start.StartMigrationActivity
-import com.example.nav3recipes.migration.step2.Step2MigrationActivity
-import com.example.nav3recipes.migration.step3.Step3MigrationActivity
-import com.example.nav3recipes.migration.step4.Step4MigrationActivity
-import com.example.nav3recipes.migration.step5.Step5MigrationActivity
-import com.example.nav3recipes.migration.step6.Step6MigrationActivity
-import com.example.nav3recipes.migration.step7.Step7MigrationActivity
+import com.example.nav3recipes.migration.atomic.begin.BeginAtomicMigrationActivity
+import com.example.nav3recipes.migration.atomic.end.EndAtomicMigrationActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,10 +17,10 @@ import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 
 /**
- * Instrumented navigation tests for each of the migration steps.
+ * Instrumented navigation tests for the start and end states of the atomic migration guide.
  */
 @RunWith(Parameterized::class)
-class MigrationActivityNavigationTest(activityClass: Class<out ComponentActivity>) {
+class AtomicMigrationTest(activityClass: Class<out ComponentActivity>) {
 
     @get:Rule(order = 0)
     val composeTestRule = createAndroidComposeRule(activityClass)
@@ -35,13 +30,8 @@ class MigrationActivityNavigationTest(activityClass: Class<out ComponentActivity
         @Parameters(name = "{0}")
         fun data(): Collection<Array<Any>> {
             return listOf(
-                arrayOf(StartMigrationActivity::class.java),
-                arrayOf(Step2MigrationActivity::class.java),
-                arrayOf(Step3MigrationActivity::class.java),
-                arrayOf(Step4MigrationActivity::class.java),
-                arrayOf(Step5MigrationActivity::class.java),
-                arrayOf(Step6MigrationActivity::class.java),
-                arrayOf(Step7MigrationActivity::class.java)
+                arrayOf(BeginAtomicMigrationActivity::class.java),
+                arrayOf(EndAtomicMigrationActivity::class.java)
             )
         }
     }

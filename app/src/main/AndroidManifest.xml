@@ -119,31 +119,11 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Nav3Recipes"/>
         <activity
-            android:name=".migration.start.StartMigrationActivity"
+            android:name=".migration.atomic.begin.BeginAtomicMigrationActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes"/>
         <activity
-            android:name=".migration.step2.Step2MigrationActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Nav3Recipes"/>
-        <activity
-            android:name=".migration.step3.Step3MigrationActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Nav3Recipes"/>
-        <activity
-            android:name=".migration.step4.Step4MigrationActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Nav3Recipes"/>
-        <activity
-            android:name=".migration.step5.Step5MigrationActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Nav3Recipes"/>
-        <activity
-            android:name=".migration.step6.Step6MigrationActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Nav3Recipes"/>
-        <activity
-            android:name=".migration.step7.Step7MigrationActivity"
+            android:name=".migration.atomic.end.EndAtomicMigrationActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes"/>
         <activity

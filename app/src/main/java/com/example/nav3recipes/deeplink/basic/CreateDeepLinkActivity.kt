@@ -48,7 +48,7 @@ import com.example.nav3recipes.deeplink.basic.ui.UsersKey
  * **RECIPE STRUCTURE** This recipe consists of three main packages:
  * 1. basic.deeplink - Contains the two activities
  * 2. basic.deeplink.ui - Contains the activity UI code, i.e. Screens, global string variables etc
- * 3. basic.deeplink.deeplinkutil - Contains the classes and helper methods to parse and match
+ * 3. basic.deeplink.util - Contains the classes and helper methods to parse and match
  * the deeplinks
  *
  * See [MainActivity] for how the requested deeplink is handled.

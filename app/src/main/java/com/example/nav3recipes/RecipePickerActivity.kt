@@ -51,8 +51,9 @@ import com.example.nav3recipes.conditional.ConditionalActivity
 import com.example.nav3recipes.dialog.DialogActivity
 import com.example.nav3recipes.material.listdetail.MaterialListDetailActivity
 import com.example.nav3recipes.material.supportingpane.MaterialSupportingPaneActivity
-import com.example.nav3recipes.modular.hilt.ModularActivity
 import com.example.nav3recipes.multiplestacks.MultipleStacksActivity
+import com.example.nav3recipes.modular.hilt.HiltModularActivity
+import com.example.nav3recipes.modular.koin.KoinModularActivity
 import com.example.nav3recipes.passingarguments.viewmodels.basic.BasicViewModelsActivity
 import com.example.nav3recipes.passingarguments.viewmodels.hilt.HiltViewModelsActivity
 import com.example.nav3recipes.passingarguments.viewmodels.koin.KoinViewModelsActivity
@@ -97,7 +98,8 @@ private val recipes = listOf(
     Recipe("Conditional navigation", ConditionalActivity::class.java),
 
     Heading("Architecture"),
-    Recipe("Modular Navigation", ModularActivity::class.java),
+    Recipe("Hilt - Modular Navigation", HiltModularActivity::class.java),
+    Recipe("Koin - Modular Navigation", KoinModularActivity::class.java),
 
     Heading("Passing navigation arguments using ViewModels"),
     Recipe("Basic", BasicViewModelsActivity::class.java),

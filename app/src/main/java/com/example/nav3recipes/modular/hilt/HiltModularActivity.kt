@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ModularActivity : ComponentActivity() {
+class HiltModularActivity : ComponentActivity() {
 
     @Inject
     lateinit var navigator: Navigator

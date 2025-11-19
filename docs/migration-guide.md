@@ -1,8 +1,3 @@
-<</google3/third_party/devsite/android/en/architecture/_reference-head-tags.md>>
-keywords: architecture, api:JetpackNavigation3
-
-{% import "_shared/_macros.html" as macros %}
-
 # Migrate from Navigation 2 to Navigation 3
 
 To migrate your app from [Navigation 2][1] to Navigation 3, follow these steps:

@@ -10,11 +10,11 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.example.nav3recipes.deeplink.basic.deeplinkutil.DeepLinkMatcher
-import com.example.nav3recipes.deeplink.basic.deeplinkutil.DeepLinkPattern
-import com.example.nav3recipes.deeplink.basic.deeplinkutil.DeepLinkRequest
-import com.example.nav3recipes.deeplink.basic.deeplinkutil.DeepLinkMatchResult
-import com.example.nav3recipes.deeplink.basic.deeplinkutil.KeyDecoder
+import com.example.nav3recipes.deeplink.basic.util.DeepLinkMatcher
+import com.example.nav3recipes.deeplink.basic.util.DeepLinkPattern
+import com.example.nav3recipes.deeplink.basic.util.DeepLinkRequest
+import com.example.nav3recipes.deeplink.basic.util.DeepLinkMatchResult
+import com.example.nav3recipes.deeplink.basic.util.KeyDecoder
 import com.example.nav3recipes.deeplink.basic.ui.EntryScreen
 import com.example.nav3recipes.deeplink.basic.ui.FriendsList
 import com.example.nav3recipes.deeplink.basic.ui.HomeKey

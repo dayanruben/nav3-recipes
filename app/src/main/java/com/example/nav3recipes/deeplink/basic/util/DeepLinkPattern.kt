@@ -1,8 +1,7 @@
-package com.example.nav3recipes.deeplink.basic.deeplinkutil
+package com.example.nav3recipes.deeplink.basic.util
 
 import android.net.Uri
 import androidx.navigation3.runtime.NavKey
-import com.example.nav3recipes.deeplink.basic.ui.NavRecipeKey
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.SerialKind

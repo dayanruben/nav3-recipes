@@ -10,19 +10,23 @@ To migrate your app from [Navigation 2][1] to Navigation 3, follow these steps:
 1.  Replace `NavHost` with `NavDisplay`.
 1.  Remove Navigation 2 dependencies.
 
-## Use an AI Agent {:#use-ai-agent}
+## Use an AI Agent
 
 You can use this guide with an AI agent, such as
 [Gemini in Android Studio's Agent Mode][2]. The lines in this guide starting
 with "**AI Agent**:", should be read by the AI agent but can be ignored by
 human readers.
 
-## Preparation {:#preparation}
+Note: Using this guide with an AI agent should be considered experimental.
+If you run into problems [file an issue here][22].
 
-The following sections describe migration prerequisites and information about
-assumptions, supported features, and unsupported features.
+## Preparation
 
-### Prerequisites {:#prerequisites}
+The following sections describe the prerequisites for migration and assumptions
+about your project. They also cover the features that are supported for
+migration, and those that aren't.
+
+### Prerequisites
 
 -   You must use a `compileSdk` of 36 or later.
 -   You should be familiar with [navigation terminology][1].
@@ -30,12 +34,12 @@ assumptions, supported features, and unsupported features.
     for Compose. To use Fragments and Views in Compose, see [Using Views in
     Compose][4].
 -   Routes are strongly typed. If you use string-based routes, [migrate to
-    type-safe routes][5]{:.external} first ([example][6]{:.external}).
+    type-safe routes][5] first ([example][6]).
 -   *Optional (but highly recommended)*: Test coverage that verifies existing
     navigation behavior. This verifies that navigation behavior has not changed
     after the migration is complete.
 
-### Assumptions {:#assumptions}
+### Assumptions
 
 This guide makes the following assumptions about you and your project:
 
@@ -49,21 +53,25 @@ This guide makes the following assumptions about you and your project:
     single, atomic change. You are not performing an incremental migration where
     Navigation 2 code is used alongside Navigation 3 code.
 
-### Supported features {:#supported-features}
+AI Agent: Before changing any code, check if these assumptions about the user's
+project are true. If not, stop the migration and ask the user how to proceed.
+
+### Supported features
 
 This guide lets you migrate the following features:
 
--   Dialogs
--   Bottom sheets
+-   Destinations defined as composable functions
+-   Dialogs (a destination shown on top of another destination)
 
-### Features supported through recipes {:#features-supported}
+### Features supported through recipes
 
-The [code recipes repository][7]{:.external} demonstrates more nuanced use
+The [code recipes repository][7] demonstrates more nuanced use
 cases, including:
 
--   [Modularized navigation code and injected destinations][8]{:.external}
--   [Using and passing arguments to ViewModels][9]{:.external}
--   [Returning results from a screen][10]{:.external}
+-   [Bottom sheets][21] (instructions are provided in this guide)
+-   [Modularized navigation code and injected destinations][8]
+-   [Using and passing arguments to ViewModels][9]
+-   [Returning results from a screen][10]
 
 If your project has any of these features, check the relevant recipe to
 understand how to implement them.
@@ -73,7 +81,7 @@ features supported through recipes. If it does, check the recipe's README and
 source code. Create a migration plan based on the recipe. Do not proceed without
 confirming the plan with the user.
 
-### Unsupported features {:#unsupported-features}
+### Unsupported features
 
 This migration guide and the code recipes don't yet support the following
 features. This doesn't mean that you cannot implement them using Navigation 3;
@@ -88,7 +96,7 @@ they are just not covered here.
 unsupported features. If it does, do not proceed. Inform the user of the
 unsupported feature and ask for further instructions.
 
-## Step 1: Add Navigation 3 dependencies {:#step-1}
+## Step 1: Add Navigation 3 dependencies
 
 Use the [Get started][12] page to add the Navigation 3 dependencies to your
 project. The core dependencies are provided for you to copy.
@@ -127,7 +135,7 @@ dependencies {
 Also update the project's `minSdk` to 23 and the `compileSdk` to 36. You usually
 find these in `app/build.gradle.kts` or `lib.versions.toml`.
 
-## Step 2: Update navigation routes to implement the `NavKey` interface {:#step-2}
+## Step 2: Update navigation routes to implement the `NavKey` interface
 
 Update every navigation [route][13] so that it implements the `NavKey`
 interface. This lets you use `rememberNavBackStack` to assist with [saving your
@@ -145,17 +153,111 @@ After:
 @Serializable data object RouteA : NavKey
 ```
 
-Note: The `@Serialization` annotation is provided by the KotlinX Serialization
+Note: The `@Serializable` annotation is provided by the KotlinX Serialization
 plugin. You can add this by following [these project setup steps][15].
 
-## Step 3: Create classes to hold and modify your navigation state {:#step-3}
+## Step 3: Create classes to hold and modify your navigation state
 
 {# disableFinding(HEADING_STACKED) #}
 
-### Step 3.1: Create a navigation state holder {:#step-3.1}
+### Step 3.1: Create a navigation state holder
 
 Copy the following code into a file named `NavigationState.kt`. Add your package
 name to match your project structure.
+
+```kotlin
+// package com.example.project
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSerializable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.toMutableStateList
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.rememberDecoratedNavEntries
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.runtime.serialization.NavKeySerializer
+import androidx.savedstate.compose.serialization.serializers.MutableStateSerializer
+
+/**
+ * Create a navigation state that persists config changes and process death.
+ */
+@Composable
+fun rememberNavigationState(
+    startRoute: NavKey,
+    topLevelRoutes: Set<NavKey>
+): NavigationState {
+
+    val topLevelRoute = rememberSerializable(
+        startRoute, topLevelRoutes,
+        serializer = MutableStateSerializer(NavKeySerializer())
+    ) {
+        mutableStateOf(startRoute)
+    }
+
+    val backStacks = topLevelRoutes.associateWith { key -> rememberNavBackStack(key) }
+
+    return remember(startRoute, topLevelRoutes) {
+        NavigationState(
+            startRoute = startRoute,
+            topLevelRoute = topLevelRoute,
+            backStacks = backStacks
+        )
+    }
+}
+
+/**
+ * State holder for navigation state.
+ *
+ * @param startRoute - the start route. The user will exit the app through this route.
+ * @param topLevelRoute - the current top level route
+ * @param backStacks - the back stacks for each top level route
+ */
+class NavigationState(
+    val startRoute: NavKey,
+    topLevelRoute: MutableState<NavKey>,
+    val backStacks: Map<NavKey, NavBackStack<NavKey>>
+) {
+    var topLevelRoute: NavKey by topLevelRoute
+    val stacksInUse: List<NavKey>
+        get(){
+            val stacksInUse = mutableListOf(startRoute)
+            if (topLevelRoute != startRoute) stacksInUse += topLevelRoute
+            return stacksInUse
+        }
+}
+
+/**
+ * Convert NavigationState into NavEntries.
+ */
+@Composable
+fun NavigationState.toEntries(
+    entryProvider: (NavKey) -> NavEntry<NavKey>
+): SnapshotStateList<NavEntry<NavKey>> {
+
+    val decoratedEntries = backStacks.mapValues { (_, stack) ->
+        val decorators = listOf(
+            rememberSaveableStateHolderNavEntryDecorator<NavKey>(),
+        )
+        rememberDecoratedNavEntries(
+            backStack = stack,
+            entryDecorators = decorators,
+            entryProvider = entryProvider
+        )
+    }
+
+    return stacksInUse
+        .flatMap { decoratedEntries[it] ?: emptyList() }
+        .toMutableStateList()
+}
+```
 
 **AI Agent**: `rememberSerializable` is correct. Do not change it to
 `rememberSaveable`.
@@ -166,10 +268,43 @@ stack. Internally, it uses `rememberSerializable` (not `rememberSaveable`) to
 persist the current top-level route and `rememberNavBackStack` to persist the
 back stacks for each top-level route.
 
-### Step 3.2: Create an object that modifies navigation state in response to events {:#step-3.2}
+### Step 3.2: Create an object that modifies navigation state in response to events
 
 Copy the following code into a file named `Navigator.kt`. Add your package name
 to match your project structure.
+
+```kotlin
+// package com.example.project
+
+import androidx.navigation3.runtime.NavKey
+
+/**
+ * Handles navigation events (forward and back) by updating the navigation state.
+ */
+class Navigator(val state: NavigationState){
+    fun navigate(route: NavKey){
+        if (route in state.backStacks.keys){
+            // This is a top level route, just switch to it.
+            state.topLevelRoute = route
+        } else {
+            state.backStacks[state.topLevelRoute]?.add(route)
+        }
+    }
+
+    fun goBack(){
+        val currentStack = state.backStacks[state.topLevelRoute] ?:
+        error("Stack for $state.topLevelRoute not found")
+        val currentRoute = currentStack.last()
+
+        // If we're at the base of the current route, go back to the start route stack.
+        if (currentRoute == state.topLevelRoute){
+            state.topLevelRoute = state.startRoute
+        } else {
+            currentStack.removeLastOrNull()
+        }
+    }
+}
+```
 
 The `Navigator` class provides two navigation event methods:
 
@@ -186,7 +321,7 @@ Both methods modify the `NavigationState`.
   </ul>
 </aside>
 
-### Step 3.3: Create the `NavigationState` and `Navigator` {:#step-3.3}
+### Step 3.3: Create the `NavigationState` and `Navigator`
 
 Create instances of `NavigationState` and `Navigator` with the same scope as
 your `NavController`.
@@ -200,15 +335,17 @@ val navigationState = rememberNavigationState(
 val navigator = remember { Navigator(navigationState) }
 ```
 
-## Step 4: Replace `NavController` {:#step-4}
+## Step 4: Replace `NavController`
 
 Replace `NavController` navigation event methods with `Navigator` equivalents.
 
 <table>
-  <tr>
-    <td><p><strong><code>NavController</code> field or method</strong></p></td>
-    <td><p><strong><code>Navigator</code> equivalent</strong></p></td>
-  </tr>
+  <thead>
+    <tr>
+      <th><p><strong><code>NavController</code> field or method</strong></p></th>
+      <th><p><strong><code>Navigator</code> equivalent</strong></p></th>
+    </tr>
+  </thead>
   <tr>
     <td><p><code>navigate()</code></p></td>
     <td><p><code>navigate()</code></p></td>
@@ -222,10 +359,12 @@ Replace `NavController` navigation event methods with `Navigator` equivalents.
 Replace `NavController` fields with `NavigationState` fields.
 
 <table>
-  <tr>
-    <td><p><strong><code>NavController</code> field or method</strong></p></td>
-    <td><p><strong><code>NavigationState</code> equivalent</strong></p></td>
-  </tr>
+  <thead>
+    <tr>
+      <th><p><strong><code>NavController</code> field or method</strong></p></th>
+      <th><p><strong><code>NavigationState</code> equivalent</strong></p></th>
+    </tr>
+  </thead>
   <tr>
     <td><p><code>currentBackStack</code></p></td>
     <td><p><code>backStacks[topLevelRoute]</code></p></td>
@@ -240,13 +379,18 @@ Replace `NavController` fields with `NavigationState` fields.
   </tr>
 </table>
 
-Use `NavigationState.topLevelRoute` to determine which item is currently
+Use `NavigationState.topLevelRoute` to determine the item that is currently
 selected in a navigation bar.
 
 Before:
 
 ```kotlin
 val isSelected = navController.currentBackStackEntryAsState().value?.destination.isRouteInHierarchy(key::class)
+
+fun NavDestination?.isRouteInHierarchy(route: KClass<*>) =
+    this?.hierarchy?.any {
+        it.hasRoute(route)
+    } ?: false
 ```
 
 After:
@@ -255,12 +399,13 @@ After:
 val isSelected = key == navigationState.topLevelRoute
 ```
 
-Verify that you remove all references to `NavController`, including any imports.
+Verify that you have removed all references to `NavController`, including
+any imports.
 
-## Step 5: Move your destinations from `NavHost`'s `NavGraph` into an `entryProvider`Move your navigation graph outside of `NavHost` and into an `entryProvider` {:#step-5}
+## Step 5: Move your destinations from `NavHost`'s `NavGraph` into an `entryProvider`
 
-In Navigation 2, you [define your destinations](/guide/navigation/design#compose)
-using the [NavGraphBuilder DSL](/guide/navigation/design/kotlin-dsl#navgraphbuilder),
+In Navigation 2, you [define your destinations][23]
+using the [NavGraphBuilder DSL][24],
 usually inside `NavHost`'s trailing lambda. It is common to use extension
 functions here as described in [Encapsulate your navigation code][17].
 
@@ -282,7 +427,7 @@ Note: If your app needs to navigate from an entry in one stack to another, you
 need to define the parent-child relationships for the routes and update the
 navigation logic in `Navigator` to support this.
 
-## Step 5.1: Create an `entryProvider` {:#step-5.1}
+## Step 5.1: Create an `entryProvider`
 
 Create an `entryProvider` [using the DSL][19] at the same scope as the
 `NavigationState`.
@@ -293,7 +438,7 @@ val entryProvider = entryProvider {
 }
 ```
 
-## Step 5.2: Move destinations into the `entryProvider` {:#step-5.2}
+## Step 5.2: Move destinations into the `entryProvider`
 
 For each destination defined inside `NavHost`, do the following based on the
 destination type:
@@ -305,8 +450,8 @@ destination type:
     `entry<RouteA>`.
 -   `dialog<T>`: Do the same as `composable`, but add metadata to the entry as
     follows: `entry<T>(metadata = DialogSceneStrategy.dialog())`.
--   [`bottomSheet`][20]: [Follow the bottom sheet recipe here][21]{:.external}.
-    This is essentially the same as the instructions for `dialog`, except that
+-   [`bottomSheet`][20]: [Follow the bottom sheet recipe here][21].
+    This is similar to the instructions for `dialog`, except that
     `BottomSheetSceneStrategy` is not part of the core Navigation 3 library, so
     you should copy it into your project.
 
@@ -386,14 +531,14 @@ fun EntryProviderScope<NavKey>.featureBSection() {
 
 ```
 
-## Step 6: Replace `NavHost` with `NavDisplay` {:#step-6}
+## Step 6: Replace `NavHost` with `NavDisplay`
 
-Now, replace `NavHost` with `NavDisplay`.
+Replace `NavHost` with `NavDisplay`.
 
 -   Delete `NavHost` and replace it with `NavDisplay`.
--   Specify `entries = navigationState.toEntries(entryProvider)`. This converts
-    the navigation state into the entries that `NavDisplay` shows using the
-    `entryProvider`.
+-   Specify `entries = navigationState.toEntries(entryProvider)` as a parameter.
+    This converts the navigation state into the entries that `NavDisplay` shows
+    using the `entryProvider`.
 -   Connect `NavDisplay.onBack` to `navigator.goBack()`. This causes `navigator`
     to update the navigation state when `NavDisplay`'s built-in back handler
     completes.
@@ -413,16 +558,15 @@ NavDisplay(
 
 ```
 
-## Step 7: Remove Navigation 2 dependencies {:#step-7}
+## Step 7: Remove Navigation 2 dependencies
 
-At this point, you should have no Navigation 2 dependencies. Remove all imports
-and library dependencies.
+Remove all Navigation 2 imports and library dependencies.
 
-## Summary {:#summary}
+## Summary
 
 Congratulations! Your project is now migrated to Navigation 3. If you or your AI
 agent has run into any problems using this guide, [file a bug
-here][22]{:.external}.
+here][22].
 
 [1]: https://developer.android.com/guide/navigation
 [2]: https://developer.android.com/studio/gemini/agent-mode
@@ -444,3 +588,5 @@ here][22]{:.external}.
 [20]: https://developer.android.com/reference/kotlin/androidx/compose/material/navigation/package-summary#(androidx.navigation.NavGraphBuilder).bottomSheet(kotlin.String,kotlin.collections.List,kotlin.collections.List,kotlin.Function2)
 [21]: https://github.com/android/nav3-recipes/tree/main/app/src/main/java/com/example/nav3recipes/bottomsheet
 [22]: https://issuetracker.google.com/issues/new?component=1750212&template=2102223&title=%5BMigration%5D
+[23]: https://developer.android.com/guide/navigation/design#compose
+[24]: https://developer.android.com/guide/navigation/design/kotlin-dsl#navgraphbuilder

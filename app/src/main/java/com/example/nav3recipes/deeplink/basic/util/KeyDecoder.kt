@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.basic.deeplinkutil
+package com.example.nav3recipes.deeplink.basic.util
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -8,7 +8,7 @@ import kotlinx.serialization.modules.EmptySerializersModule
 import kotlinx.serialization.modules.SerializersModule
 
 /**
- * Decodes the list of arguments into a a backstack key
+ * Decodes the list of arguments into a a back stack key
  *
  * **IMPORTANT** This decoder assumes that all argument types are Primitives.
  */

@@ -53,6 +53,8 @@ Examples showing how to use the layouts provided by the [Compose Material3 Adapt
 - **[Returning Results as State](app/src/main/java/com/example/nav3recipes/results/state)**: Returning results as state stored in a CompositionLocal.
 
 ### Planned
+The most upvoted [recipe requests]([url](https://github.com/android/nav3-recipes/issues?q=is%3Aissue%20state%3Aopen%20label%3Arecipe-request)) will be considered for implementation. Don't see your recipe? [File a request for one here](https://github.com/android/nav3-recipes/issues/new?template=1-recipe-request.md)
+
 - **Android XR**: Custom navigation and layout behavior for Android XR
 
 ## Custom layout example

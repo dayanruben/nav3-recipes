@@ -8,7 +8,7 @@ It consists of two activities - `CreateDeepLinkActivity` to construct and trigge
 
 ## Demonstrated forms of deeplink
 
-The `MainActivity` has a several backStack keys to demonstrate different types of supported deeplinks:
+The `MainActivity` has several backStack keys to demonstrate different types of supported deeplinks:
 1. `HomeKey` - deeplink with an exact url (no deeplink arguments)
 2. `UsersKey` - deeplink with path arguments
 3. `SearchKey` - deeplink with query arguments

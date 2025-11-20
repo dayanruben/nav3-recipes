@@ -64,7 +64,7 @@ The following is a screen recording showing the navigation behavior of a [custom
 Clone this repository and open the root folder in [Android Studio](https://developer.android.com/studio). Each recipe is contained in its own package with its own `Activity`.
 
 ## Found an issue?
-If the issue is _directly related to this project_, as in, it's reproducible without modifying this project's source code, then please [file an issue on github](https://github.com/android/nav3-recipes/issues/new). If you've found an issue with the Jetpack Navigation 3 library, please [file an issue on the issue tracker](https://issuetracker.google.com/issues/new?component=1750212&template=2102223).
+If the issue is _directly related to this project_, as in, it's reproducible without modifying this project's source code, then please [file an issue on github](https://github.com/android/nav3-recipes/issues/new?template=2-bug-report.md). If you've found an issue with the Jetpack Navigation 3 library, please [file an issue on the issue tracker](https://issuetracker.google.com/issues/new?component=1750212&template=2102223).
 
 ## Contributing
 We'd love to accept your contributions. Please follow [these instructions](CONTRIBUTING.md).

@@ -7,7 +7,7 @@ Every Navigation 3 release will be an opportunity for patterns you see in recipe
 (optional) helpers in the library itself. Then we'll update the recipe to use that prebuilt helper, thus
 ensuring that the recipes continue to be a good way to approach these kinds of problems.
 
-Recipes on the `main` branch use the latest **alpha** version of Nav3. For recipes that use **stable** versions, check the [releases page](https://github.com/android/nav3-recipes/releases).
+Recipes on the `main` branch use the **latest** (which may be an alpha or snapshot) version of Nav3. For recipes that use **stable** versions, check the [releases page](https://github.com/android/nav3-recipes/releases).
 
 ## Recipes
 These are the recipes and what they demonstrate. 

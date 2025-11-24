@@ -87,6 +87,7 @@ class ListDetailActivity : ComponentActivity() {
                         ) { conversationDetail ->
                             ConversationDetailScreen(
                                 conversationDetail = conversationDetail,
+                                onBack = { backStack.removeLastOrNull() },
                                 onProfileClicked = { backStack.add(Profile) }
                             )
                         }

@@ -26,7 +26,7 @@ import org.koin.mp.KoinPlatform
 /**
  * This recipe demonstrates how to use a modular approach with Navigation 3,
  * where different parts of the application are defined in separate modules and injected
- * into the main app using Dagger/Hilt.
+ * into the main app using Koin.
  * 
  * Features (Conversation and Profile) are split into two modules: 
  * - api: defines the public facing routes for this feature

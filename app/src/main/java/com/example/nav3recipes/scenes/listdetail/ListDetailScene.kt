@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavEntry
@@ -52,18 +54,22 @@ class ListDetailScene<T : Any>(
             Column(modifier = Modifier.weight(0.4f)) {
                 listEntry.Content()
             }
-            Column(modifier = Modifier.weight(0.6f)) {
-                AnimatedContent(
-                    targetState = detailEntry,
-                    contentKey = { entry -> entry.contentKey },
-                    transitionSpec = {
-                        slideInHorizontally(
-                            initialOffsetX = { it }
-                        ) togetherWith
-                            slideOutHorizontally(targetOffsetX = { -it })
+
+            // Let the detail entry know not to display a back button.
+            CompositionLocalProvider(LocalBackButtonVisibility provides false){
+                Column(modifier = Modifier.weight(0.6f)) {
+                    AnimatedContent(
+                        targetState = detailEntry,
+                        contentKey = { entry -> entry.contentKey },
+                        transitionSpec = {
+                            slideInHorizontally(
+                                initialOffsetX = { it }
+                            ) togetherWith
+                                    slideOutHorizontally(targetOffsetX = { -it })
+                        }
+                    ) { entry ->
+                        entry.Content()
                     }
-                ){ entry ->
-                    entry.Content()
                 }
             }
         }
@@ -86,6 +92,13 @@ class ListDetailScene<T : Any>(
         fun detailPane() = mapOf(DETAIL_KEY to true)
     }
 }
+
+/**
+ * This `CompositionLocal` can be used by a detail `NavEntry` to decide whether to display
+ * a back button. Default is `true`. It is set to `false` for a detail `NavEntry` when being
+ * displayed in a `ListDetailScene`.
+ */
+val LocalBackButtonVisibility = compositionLocalOf{ true }
 
 @Composable
 fun <T : Any> rememberListDetailSceneStrategy(): ListDetailSceneStrategy<T> {

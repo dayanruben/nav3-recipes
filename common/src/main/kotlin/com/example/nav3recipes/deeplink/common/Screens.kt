@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.basic.ui
+package com.example.nav3recipes.deeplink.common
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -32,49 +33,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
-import androidx.navigation3.runtime.NavKey
-import kotlinx.serialization.Serializable
-
-internal interface NavRecipeKey: NavKey {
-    val name: String
-}
-
-@Serializable
-internal object HomeKey: NavRecipeKey {
-    override val name: String = STRING_LITERAL_HOME
-}
-
-@Serializable
-internal data class UsersKey(
-    val filter: String,
-): NavRecipeKey {
-    override val name: String = STRING_LITERAL_USERS
-    companion object {
-        const val FILTER_KEY = STRING_LITERAL_FILTER
-        const val FILTER_OPTION_RECENTLY_ADDED = "recentlyAdded"
-        const val FILTER_OPTION_ALL = "all"
-    }
-}
-
-@Serializable
-internal data class SearchKey(
-    val firstName: String? = null,
-    val ageMin: Int? = null,
-    val ageMax: Int? = null,
-    val location: String? = null,
-): NavRecipeKey {
-    override val name: String = STRING_LITERAL_SEARCH
-}
-
-@Serializable
-internal data class User(
-    val firstName: String,
-    val age: Int,
-    val location: String,
-)
 
 @Composable
-internal fun EntryScreen(text: String, content: @Composable () -> Unit = { }) {
+public fun EntryScreen(text: String, content: @Composable () -> Unit = { }) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(text, fontWeight = FontWeight.Bold, fontSize = FONT_SIZE_TITLE)
@@ -84,7 +45,7 @@ internal fun EntryScreen(text: String, content: @Composable () -> Unit = { }) {
 }
 
 @Composable
-internal fun FriendsList(users: List<User>) {
+public fun FriendsList(users: List<User>) {
     // display list of matching targets
     if (users.isEmpty()) {
         Text("List is Empty", fontWeight = FontWeight.Bold)
@@ -102,7 +63,7 @@ internal fun FriendsList(users: List<User>) {
  * Displays a text input menu, may include several text fields
  */
 @Composable
-internal fun MenuTextInput(
+public fun MenuTextInput(
     menuLabels: List<String>,
     onValueChange: (String, String) -> Unit = { _, _ ->},
 ) {
@@ -124,11 +85,24 @@ internal fun MenuTextInput(
 
 }
 
+@Composable
+public fun PaddedButton(
+    text: String,
+    onClick: () -> Unit,
+) {
+    Button(
+        modifier = Modifier.padding(BUTTON_PADDING),
+        onClick = onClick
+    ) {
+        Text(text)
+    }
+}
+
 /**
  * Displays a drop down menu, may include multiple drop downs
  */
 @Composable
-internal fun MenuDropDown(
+public fun MenuDropDown(
     menuOptions: Map<String, List<String>>,
     onSelect: (label: String, selection: String) -> Unit = { _, _ ->},
 ) {
@@ -197,26 +171,6 @@ private fun ArgumentDropDownMenu(
     }
 }
 
-@Composable
-internal fun DeepLinkButton(
-    context: Context,
-    targetActivity: Class<*>,
-    deepLinkUrl: String,
-) {
-    Button(
-        onClick = {
-            val intent = Intent(
-                context,
-                targetActivity
-            )
-            // start activity with the url
-            intent.data = deepLinkUrl.toUri()
-            context.startActivity(intent)
-        }
-    ) {
-        Text("Deeplink away!")
-    }
-}
 
 @Composable
 fun TextContent(text: String) {
@@ -228,5 +182,7 @@ fun TextContent(text: String) {
     )
 }
 
-internal val FONT_SIZE_TITLE: TextUnit = 20.sp
-internal val FONT_SIZE_TEXT: TextUnit = 15.sp
+public val FONT_SIZE_TITLE: TextUnit = 20.sp
+public val FONT_SIZE_TEXT: TextUnit = 15.sp
+
+private val BUTTON_PADDING = PaddingValues(end = 12.dp, bottom = 12.dp)

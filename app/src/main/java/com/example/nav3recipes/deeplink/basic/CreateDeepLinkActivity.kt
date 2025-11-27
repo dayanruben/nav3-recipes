@@ -1,5 +1,6 @@
 package com.example.nav3recipes.deeplink.basic
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,27 +10,25 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.example.nav3recipes.deeplink.basic.ui.DeepLinkButton
-import com.example.nav3recipes.deeplink.basic.ui.EMPTY
-import com.example.nav3recipes.deeplink.basic.ui.EntryScreen
-import com.example.nav3recipes.deeplink.basic.ui.FIRST_NAME_JOHN
-import com.example.nav3recipes.deeplink.basic.ui.FIRST_NAME_JULIE
-import com.example.nav3recipes.deeplink.basic.ui.FIRST_NAME_MARY
-import com.example.nav3recipes.deeplink.basic.ui.FIRST_NAME_TOM
-import com.example.nav3recipes.deeplink.basic.ui.LOCATION_BC
-import com.example.nav3recipes.deeplink.basic.ui.LOCATION_BR
-import com.example.nav3recipes.deeplink.basic.ui.LOCATION_CA
-import com.example.nav3recipes.deeplink.basic.ui.LOCATION_US
-import com.example.nav3recipes.deeplink.basic.ui.MenuDropDown
-import com.example.nav3recipes.deeplink.basic.ui.MenuTextInput
+import androidx.core.net.toUri
+import com.example.nav3recipes.deeplink.common.PaddedButton
+import com.example.nav3recipes.deeplink.common.EMPTY
+import com.example.nav3recipes.deeplink.common.EntryScreen
+import com.example.nav3recipes.deeplink.common.FIRST_NAME_JOHN
+import com.example.nav3recipes.deeplink.common.FIRST_NAME_JULIE
+import com.example.nav3recipes.deeplink.common.FIRST_NAME_MARY
+import com.example.nav3recipes.deeplink.common.FIRST_NAME_TOM
+import com.example.nav3recipes.deeplink.common.LOCATION_BC
+import com.example.nav3recipes.deeplink.common.LOCATION_BR
+import com.example.nav3recipes.deeplink.common.LOCATION_CA
+import com.example.nav3recipes.deeplink.common.LOCATION_US
+import com.example.nav3recipes.deeplink.common.MenuDropDown
+import com.example.nav3recipes.deeplink.common.MenuTextInput
 import com.example.nav3recipes.deeplink.basic.ui.PATH_BASE
 import com.example.nav3recipes.deeplink.basic.ui.PATH_INCLUDE
 import com.example.nav3recipes.deeplink.basic.ui.PATH_SEARCH
 import com.example.nav3recipes.deeplink.basic.ui.STRING_LITERAL_HOME
-import com.example.nav3recipes.deeplink.basic.ui.SearchKey
-import com.example.nav3recipes.deeplink.basic.ui.TextContent
-import com.example.nav3recipes.deeplink.basic.ui.HomeKey
-import com.example.nav3recipes.deeplink.basic.ui.UsersKey
+import com.example.nav3recipes.deeplink.common.TextContent
 
 /**
  * This activity allows the user to create a deep link and make a request with it.
@@ -47,7 +46,7 @@ import com.example.nav3recipes.deeplink.basic.ui.UsersKey
  *
  * **RECIPE STRUCTURE** This recipe consists of three main packages:
  * 1. basic.deeplink - Contains the two activities
- * 2. basic.deeplink.ui - Contains the activity UI code, i.e. Screens, global string variables etc
+ * 2. basic.deeplink.ui - Contains the activity UI code, i.e. global string variables, deeplink URLs etc
  * 3. basic.deeplink.util - Contains the classes and helper methods to parse and match
  * the deeplinks
  *
@@ -150,11 +149,15 @@ class CreateDeepLinkActivity : ComponentActivity() {
                 val finalUrl = "${PATH_BASE}/${selectedPath.value}$arguments"
                 TextContent("Final url:\n$finalUrl")
                 // deeplink to target
-                DeepLinkButton(
-                    context = this@CreateDeepLinkActivity,
-                    targetActivity = MainActivity::class.java,
-                    deepLinkUrl = finalUrl
-                )
+                PaddedButton("Deeplink Away!") {
+                    val intent = Intent(
+                        this@CreateDeepLinkActivity,
+                        MainActivity::class.java
+                    )
+                    // start activity with the url
+                    intent.data = finalUrl.toUri()
+                    startActivity(intent)
+                }
             }
         }
     }

@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.navigation2)
+    implementation(project(":common"))
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

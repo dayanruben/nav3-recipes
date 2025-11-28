@@ -31,6 +31,8 @@ Examples showing how to use the layouts provided by the [Compose Material3 Adapt
 - **[List-Detail](app/src/main/java/com/example/nav3recipes/material/listdetail)**: Shows how to use a Material adaptive list-detail layout.
 - **[Supporting Pane](app/src/main/java/com/example/nav3recipes/material/supportingpane)**: Shows how to use a Material adaptive supporting pane layout.
 
+Note: If you find a bug or have a feature request for Material3 Adaptive Scenes [please file it here](https://issuetracker.google.com/issues/new?component=1467081). Don't file an issue on this repository.
+
 ### Animations
 - **[Animations](app/src/main/java/com/example/nav3recipes/animations)**: Shows how to override the default animations for all destinations and a single destination.
 

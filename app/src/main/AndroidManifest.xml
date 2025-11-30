@@ -179,6 +179,11 @@
                 </uri-relative-filter-group>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".deeplink.advanced.AdvancedCreateAdvancedDeepLinkActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Nav3Recipes">
+        </activity>
     </application>
 
 </manifest>

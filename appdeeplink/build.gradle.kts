@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.nav3recipes"
+    namespace = "com.example.nav3recipes.deeplink.app"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.nav3recipes.deeplink"
+        applicationId = "com.example.nav3recipes.deeplink.app"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.navigation3.ui)
+    implementation(project(":common"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

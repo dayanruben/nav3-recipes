@@ -1,8 +1,7 @@
 package com.example.nav3recipes.deeplink.common
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,12 +26,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.net.toUri
 
 @Composable
 public fun EntryScreen(text: String, content: @Composable () -> Unit = { }) {
@@ -45,7 +46,10 @@ public fun EntryScreen(text: String, content: @Composable () -> Unit = { }) {
 }
 
 @Composable
-public fun FriendsList(users: List<User>) {
+public fun FriendsList(
+    users: List<User>,
+    onClick: ((user: User) -> Unit)? = null
+) {
     // display list of matching targets
     if (users.isEmpty()) {
         Text("List is Empty", fontWeight = FontWeight.Bold)
@@ -53,7 +57,12 @@ public fun FriendsList(users: List<User>) {
         LazyColumn {
             items(users.size) { idx ->
                 val user = users[idx]
-                TextContent("${user.firstName}(${user.age}), ${user.location}")
+                val userString = "${user.firstName}(${user.age}), ${user.location}"
+                if (onClick != null) {
+                    TextClickable(userString) { onClick(user) }
+                } else {
+                    TextContent(userString)
+                }
             }
         }
     }
@@ -182,7 +191,24 @@ fun TextContent(text: String) {
     )
 }
 
+@Composable
+public fun TextClickable(
+    text: String,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = text,
+        color = Color.Blue,
+        style = TextStyle(textDecoration = TextDecoration.Underline),
+        modifier = Modifier.width(300.dp).clickable(
+            true,
+            onClick = onClick
+        ),
+        textAlign = TextAlign.Center,
+        fontSize = FONT_SIZE_TEXT,
+    )
+}
+
 public val FONT_SIZE_TITLE: TextUnit = 20.sp
 public val FONT_SIZE_TEXT: TextUnit = 15.sp
-
-private val BUTTON_PADDING = PaddingValues(end = 12.dp, bottom = 12.dp)
+private val BUTTON_PADDING = PaddingValues(12.dp, 12.dp, 12.dp, 12.dp)

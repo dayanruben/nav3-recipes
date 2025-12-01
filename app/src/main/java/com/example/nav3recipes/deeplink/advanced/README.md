@@ -1,9 +1,9 @@
 # Deep Link Advanced Recipe
 
-This recipe demonstrates how to build a synthetic backStack and support Back vs Up button
-through managing the Task stack.
+This recipe demonstrates how to apply the principles of navigation in the context of deep links by
+managing a synthetic backStack and Task stacks.
 
-# How it works
+# Recipe Structure
 This recipe simulates a real-world scenario where "App A" deeplinks
 into "App B".
 
@@ -15,45 +15,12 @@ trigger that in either the existing Task, or in a new Task.
 the MainActivity that you deeplink into. That module shows you how to build a synthetic backStack
 and how to manage the Task stack properly in order to support both Back and Up buttons.
 
-# Synthetic BackStack
-A backStack that simulates the user manually navigating from the root screen to the deeplink screen.
-In general it should be built when the deeplinked Activity is started in a new
-Task stack. See below sections for more details.
+# Core implementation
+A couple classes of note:
 
-# Back Button
-The Back button should direct users back the previous screen. However, what this "previous screen" 
-is depends on whether the deeplinked screen was opened in the original Task (with App A as 
-root Activity), or in a new Task.
+1. **navigate up** is demonstrated in [Navigator](../../../../../../../../../appdeeplink/src/main/java/com/example/nav3recipes/deeplink/app/util/Navigator.kt)
+2. **synthetic backStack** is demonstrated in [buildBackStack](../../../../../../../../../appdeeplink/src/main/java/com/example/nav3recipes/deeplink/app/util/BackStackUtil.kt)
 
-In the first case with the original Task, the Back button should bring the user back to the 
-screen that triggered the deeplink. Note: Depending on the actual
-app, you can arguably also create a synthetic backstack here if you want a different back behavior.
-
-In the second case with a new Task, the Back button should
-bring the user to the hierarchical PARENT of the current screen. A synthetic backStack here
-ensures that the user backs into the expected screen.
-
-# Up Button
-The Up button should direct the users to the hierarchical PARENT of the current screen. 
-Furthermore, the Up button should never bring the user out of deeplinked app. 
-This means the root screen should NOT have the Up button.
-
-A synthetic backStack here ensures that users are correctly directed to the PARENT screen.
-As mentioned, a synthetic backStack should be built / is built when starting a new Task. 
-This means that if the deeplinked Activity were started in the original Task, the
-Activity should be restarted with Intent.FLAG_ACTIVITY_NEW_TASK. This flag would trigger the
-Activity to restart in a new Task, which in turn should trigger the building of a synthetic backStack.
-
-## Task & backStack illustration
-
-**Original Task**
-| Task        | Target                         | Synthetic backStack                            |
-|-------------|--------------------------------|------------------------------------------------|
-| Up Button   | Deeplinked Screen's Parent     | Restart Activity on new Task & build backStack |
-| Back Button | Screen that triggered deeplink | None                                           |
-
-**New Task**
-| Task        | Target                         | Synthetic backStack                            |
-|-------------|--------------------------------|------------------------------------------------|
-| Up Button   | Deeplinked Screen's Parent     | Build backStack on Activity creation           |
-| Back Button | Deeplinked Screen's Parent     | Build backStack on Activity creation           |
+# Further Read
+Check out the [deep link guide](../../../../../../../../../docs/deeplink-guide.md) for a 
+comprehensive guide on Deep linking principles and how to apply them in Navigation 3.

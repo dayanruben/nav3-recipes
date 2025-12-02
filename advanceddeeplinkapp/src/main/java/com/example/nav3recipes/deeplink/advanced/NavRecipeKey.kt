@@ -1,10 +1,10 @@
-package com.example.nav3recipes.deeplink.app
+package com.example.nav3recipes.deeplink.advanced
 
 import androidx.navigation3.runtime.NavKey
 import com.example.nav3recipes.deeplink.common.User
 import kotlinx.serialization.Serializable
 import androidx.navigation3.runtime.NavBackStack
-import com.example.nav3recipes.deeplink.app.util.Navigator
+import com.example.nav3recipes.deeplink.advanced.util.navigateUp
 
 internal const val PATH_BASE = "https://www.nav3deeplink.com"
 
@@ -24,7 +24,7 @@ internal const val PATH_BASE = "https://www.nav3deeplink.com"
  * implement these two fields:
  * 1. parent - the hierarchical parent of this key, required for building a synthetic backStack
  * 2. deeplinkUrl - the deeplink url associated with this key, required for supporting the
- * Up button (see [Navigator.navigateUp] for more on this).
+ * Up button (see [navigateUp] for more on this).
  */
 
 internal interface NavRecipeKey: NavKey {

@@ -152,7 +152,7 @@ and the helper functions in the [util](../app/src/main/java/com/example/nav3reci
 ## Synthetic backStack & managing Tasks
 
 Now we are ready to apply the Principles of Navigation. Their application is demonstrated
-in the [deeplink.advanced](../app/src/main/java/com/example/nav3recipes/deeplink/advanced) and [deeplink.app](../appdeeplink/src/main/java/com/example/nav3recipes/deeplink/app)
+in the [deeplink.advanced](../app/src/main/java/com/example/nav3recipes/deeplink/advanced) and [deeplink.app](../advanceddeeplinkapp/src/main/java/com/example/nav3recipes/deeplink/app)
 modules.
 
 ### Identifying the Task

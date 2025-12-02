@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.app.ui.theme
+package com.example.nav3recipes.deeplink.advanced.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,9 +1,10 @@
-package com.example.nav3recipes.deeplink.app
+package com.example.nav3recipes.deeplink.advanced
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -12,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation3.runtime.NavBackStack
@@ -19,15 +21,15 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.example.nav3recipes.deeplink.app.util.Navigator
-import com.example.nav3recipes.deeplink.app.util.buildBackStack
-import com.example.nav3recipes.deeplink.app.util.toKey
+import com.example.nav3recipes.deeplink.advanced.util.buildBackStack
+import com.example.nav3recipes.deeplink.advanced.util.navigateUp
+import com.example.nav3recipes.deeplink.advanced.util.toKey
 import com.example.nav3recipes.deeplink.common.EntryScreen
 import com.example.nav3recipes.deeplink.common.FriendsList
 import com.example.nav3recipes.deeplink.common.LIST_USERS
 import com.example.nav3recipes.deeplink.common.PaddedButton
 
-class MainActivity: ComponentActivity() {
+class AdvancedDeeplinkAppActivity: ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +47,6 @@ class MainActivity: ComponentActivity() {
         )
         setContent {
             val backStack: NavBackStack<NavKey> = rememberNavBackStack(*(syntheticBackStack.toTypedArray()))
-            val navigator = remember { Navigator(backStack, this@MainActivity) }
 
             Scaffold(
                 topBar = {
@@ -63,7 +64,10 @@ class MainActivity: ComponentActivity() {
                              */
                             if (backStack.last() != Home) {
                                 IconButton(onClick = {
-                                    navigator.navigateUp()
+                                    backStack.navigateUp(
+                                        this@AdvancedDeeplinkAppActivity,
+                                        this@AdvancedDeeplinkAppActivity
+                                    )
                                 }) {
                                     Icon(
                                         painter = painterResource(id = R.drawable.outline_arrow_upward_24),
@@ -74,22 +78,23 @@ class MainActivity: ComponentActivity() {
                         },
                     )
                 },
-            ) { _ ->
+            ) { innerPadding ->
                 NavDisplay(
                     backStack = backStack,
-                    onBack = { navigator.pop() },
+                    onBack = { backStack.removeLastOrNull()},
+                    modifier = Modifier.padding(innerPadding),
                     entryProvider = entryProvider {
                         entry<Home> { key ->
                             EntryScreen(key.screenTitle) {
                                 PaddedButton("See Users") {
-                                    navigator.add(Users)
+                                    backStack.add(Users)
                                 }
                             }
                         }
                         entry<Users> { key ->
                             EntryScreen(key.screenTitle) {
                                 FriendsList(LIST_USERS) { user ->
-                                    navigator.add(UserDetail(user))
+                                    backStack.add(UserDetail(user))
                                 }
                             }
                         }

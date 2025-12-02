@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.nav3recipes.deeplink.app"
+    namespace = "com.example.nav3recipes.deeplink.advanced"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.nav3recipes.deeplink.app"
+        applicationId = "com.example.nav3recipes.deeplink.advanced"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

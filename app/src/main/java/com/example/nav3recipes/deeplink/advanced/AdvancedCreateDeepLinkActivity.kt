@@ -25,16 +25,16 @@ internal const val ADVANCED_PATH_BASE = "https://www.nav3deeplink.com"
  * into "App B".
  *
  * "App A" is simulated by this current module [com.example.nav3recipes.deeplink.advanced], which
- * contains the [AdvancedCreateAdvancedDeepLinkActivity] that allows you to create a deeplink intent and
+ * contains the [AdvancedCreateDeepLinkActivity] that allows you to create a deeplink intent and
  * trigger that in either the existing Task, or in a new Task.
  *
- * "App B" is simulated by the module [com.example.nav3recipes.deeplink.app], which contains
+ * "App B" is simulated by the module [com.example.nav3recipes.deeplink.advanced], which contains
  * the MainActivity that you deeplink into. That module shows you how to build a synthetic backStack
  * and how to manage the Task stack properly in order to support both Back and Up buttons.
  *
  * See the [README](README.md) file of current module for more info on advanced deep linking.
  */
-class AdvancedCreateAdvancedDeepLinkActivity: ComponentActivity() {
+class AdvancedCreateDeepLinkActivity: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

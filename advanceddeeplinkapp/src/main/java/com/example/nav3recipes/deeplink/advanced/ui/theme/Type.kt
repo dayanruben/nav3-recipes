@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.app.ui.theme
+package com.example.nav3recipes.deeplink.advanced.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

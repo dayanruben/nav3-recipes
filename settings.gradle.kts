@@ -47,5 +47,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Nav3Recipes"
 include(":app")
-include(":appdeeplink")
+include(":advanceddeeplinkapp")
 include(":common")

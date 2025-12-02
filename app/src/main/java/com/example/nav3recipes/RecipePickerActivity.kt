@@ -63,7 +63,7 @@ import com.example.nav3recipes.results.state.ResultStateActivity
 import com.example.nav3recipes.scenes.listdetail.ListDetailActivity
 import com.example.nav3recipes.scenes.twopane.TwoPaneActivity
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
-import com.example.nav3recipes.deeplink.advanced.AdvancedCreateAdvancedDeepLinkActivity
+import com.example.nav3recipes.deeplink.advanced.AdvancedCreateDeepLinkActivity
 
 /**
  * Activity to show all available recipes and allow users to launch each one.
@@ -114,7 +114,7 @@ private val recipes = listOf(
 
     Heading("Deeplink"),
     Recipe("Parse Intent", CreateDeepLinkActivity::class.java),
-    Recipe("Synthetic BackStack", AdvancedCreateAdvancedDeepLinkActivity::class.java),
+    Recipe("Synthetic BackStack", AdvancedCreateDeepLinkActivity::class.java),
 )
 
 class RecipePickerActivity : ComponentActivity() {

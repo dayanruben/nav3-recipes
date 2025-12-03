@@ -7,20 +7,18 @@ managing a synthetic backStack and Task stacks.
 This recipe simulates a real-world scenario where "App A" deeplinks
 into "App B".
 
-"App A" is simulated by the module [com.example.nav3recipes.deeplink.advanced], which
+"App A" is simulated by the module [com.example.nav3recipes.deeplink.advanced](/app/src/main/java/com/example/nav3recipes/deeplink/advanced), which
 contains the [CreateAdvancedDeepLinkActivity] that allows you to create a deeplink intent and
 trigger that in either the existing Task, or in a new Task.
 
-"App B" is simulated by the module [com.example.nav3recipes.deeplink.app], which contains
+"App B" is simulated by the module [advanceddeeplinkapp](/advanceddeeplinkapp/src/main/java/com/example/nav3recipes/deeplink/advanced), which contains
 the MainActivity that you deeplink into. That module shows you how to build a synthetic backStack
 and how to manage the Task stack properly in order to support both Back and Up buttons.
 
 # Core implementation
-A couple classes of note:
-
-1. **navigate up** is demonstrated in [Navigator](../../../../../../../../../appdeeplink/src/main/java/com/example/nav3recipes/deeplink/app/util/Navigator.kt)
-2. **synthetic backStack** is demonstrated in [buildBackStack](../../../../../../../../../appdeeplink/src/main/java/com/example/nav3recipes/deeplink/app/util/BackStackUtil.kt)
+The core helper functions for navigateUp and building synthetic backStack can be
+found [here](/advanceddeeplinkapp/src/main/java/com/example/nav3recipes/deeplink/advanced/util/DeepLinkBackStackUtil.kt)
 
 # Further Read
-Check out the [deep link guide](../../../../../../../../../docs/deeplink-guide.md) for a 
+Check out the [deep link guide](/docs/deeplink-guide.md) for a 
 comprehensive guide on Deep linking principles and how to apply them in Navigation 3.

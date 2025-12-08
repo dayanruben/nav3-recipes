@@ -23,7 +23,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.navigation3.runtime.NavBackStack
@@ -38,19 +41,39 @@ import com.example.nav3recipes.content.ContentYellow
 import kotlinx.serialization.Serializable
 
 
-// We use a sealed class for the route supertype because KotlinX Serialization handles polymorphic
-// serialization of sealed classes automatically.
+/**
+ * Class for representing navigation keys in the app.
+ *
+ * Note: We use a sealed class because KotlinX Serialization handles
+ * polymorphic serialization of sealed classes automatically.
+ *
+ * @param requiresLogin - true if the navigation key requires that the user is logged in
+ * to navigate to it
+ */
 @Serializable
-sealed class Route(val requiresLogin: Boolean = false) : NavKey
+sealed class ConditionalNavKey(val requiresLogin: Boolean = false) : NavKey
 
+/**
+ * Key representing home screen
+ */
 @Serializable
-private data object Home : Route()
+private data object Home : ConditionalNavKey()
 
+/**
+ * Key representing profile screen that is only accessible once the user has logged in
+ */
 @Serializable
-private data object Profile : Route(requiresLogin = true)
+private data object Profile : ConditionalNavKey(requiresLogin = true)
 
+/**
+ * Key representing login screen
+ *
+ * @param redirectToKey - navigation key to redirect to after successful login
+ */
 @Serializable
-private data object Login : Route()
+private data class Login(
+    val redirectToKey: ConditionalNavKey? = null
+) : ConditionalNavKey()
 
 class ConditionalActivity : ComponentActivity() {
 
@@ -58,28 +81,29 @@ class ConditionalActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val backStack = rememberNavBackStack<Route>(Home)
-            val isLoggedInState = rememberSaveable {
+            val backStack = rememberNavBackStack<ConditionalNavKey>(Home)
+            var isLoggedIn by rememberSaveable {
                 mutableStateOf(false)
             }
-
-            val navigator = Navigator(
-                backStack = backStack,
-                loginRoute = Login,
-                isLoggedInState = isLoggedInState
-            )
+            val navigator = remember {
+                Navigator(
+                    backStack = backStack,
+                    onNavigateToRestrictedKey = { redirectToKey -> Login(redirectToKey) },
+                    isLoggedIn = { isLoggedIn }
+                )
+            }
 
             NavDisplay(
                 backStack = backStack,
                 onBack = { navigator.goBack() },
                 entryProvider = entryProvider {
                     entry<Home> {
-                        ContentGreen("Welcome to Nav3. Logged in? ${isLoggedInState.value}") {
+                        ContentGreen("Welcome to Nav3. Logged in? ${isLoggedIn}") {
                             Column {
                                 Button(onClick = { navigator.navigate(Profile) }) {
                                     Text("Profile")
                                 }
-                                Button(onClick = { navigator.navigate(Login) }) {
+                                Button(onClick = { navigator.navigate(Login()) }) {
                                     Text("Login")
                                 }
                             }
@@ -88,16 +112,21 @@ class ConditionalActivity : ComponentActivity() {
                     entry<Profile> {
                         ContentBlue("Profile screen (only accessible once logged in)") {
                             Button(onClick = {
-                                navigator.logout()
+                                isLoggedIn = false
+                                navigator.navigate(Home)
                             }) {
                                 Text("Logout")
                             }
                         }
                     }
-                    entry<Login> {
-                        ContentYellow("Login screen. Logged in? ${isLoggedInState.value}") {
+                    entry<Login> { key ->
+                        ContentYellow("Login screen. Logged in? $isLoggedIn") {
                             Button(onClick = {
-                                navigator.login()
+                                isLoggedIn = true
+                                key.redirectToKey?.let { targetKey ->
+                                    backStack.remove(key)
+                                    navigator.navigate(targetKey)
+                                }
                             }) {
                                 Text("Login")
                             }
@@ -110,10 +139,8 @@ class ConditionalActivity : ComponentActivity() {
 }
 
 
-
 // An overload of `rememberNavBackStack` that returns a subtype of `NavKey`.
-// If you would like to see this included in the Nav3 library please upvote the following issue:
-// https://issuetracker.google.com/issues/463382671
+// See https://issuetracker.google.com/issues/463382671 for a discussion of this function
 @Composable
 fun <T : NavKey> rememberNavBackStack(vararg elements: T): NavBackStack<T> {
     return rememberSerializable(

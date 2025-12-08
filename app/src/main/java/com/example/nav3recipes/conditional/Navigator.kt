@@ -16,63 +16,33 @@
 
 package com.example.nav3recipes.conditional
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.navigation3.runtime.NavBackStack
 
 /**
- * Manages application navigation with built-in support for conditional access.
+ * Provides navigation events with built-in support for conditional access. If the user attempts to
+ * navigate to a [ConditionalNavKey] that requires login ([ConditionalNavKey.requiresLogin] is true)
+ * but is not currently logged in, the Navigator will redirect the user to a login key.
  *
- * This class wraps a [NavBackStack] to intercept navigation events. If a user attempts to navigate
- * to a [Route] that requires login (via [Route.requiresLogin]) but is not currently authenticated,
- * this Navigator will:
- * 1. Save the intended destination.
- * 2. Redirect the user to the [loginRoute].
- *
- * @property backStack The underlying Navigation 3 back stack that holds the history of [Route]s.
- * @property loginRoute The specific [Route] representing the Login screen.
- * @property isLoggedInState A [MutableState] representing the source of truth for the user's
- * authentication status.
+ * @property backStack The back stack that is modified by this class
+ * @property onNavigateToRestrictedKey A lambda that is called when the user attempts to navigate
+ * to a key that requires login. This should return the key that represents the login screen. The
+ * user's target key is supplied as a parameter so that after successful login the user can be
+ * redirected to their target destination.
+ * @property isLoggedIn A lambda that returns whether the user is logged in.
  */
 class Navigator(
-    private val backStack: NavBackStack<Route>,
-    private val loginRoute: Route,
-    isLoggedInState: MutableState<Boolean>,
+    private val backStack: NavBackStack<ConditionalNavKey>,
+    private val onNavigateToRestrictedKey: (targetKey: ConditionalNavKey?) -> ConditionalNavKey,
+    private val isLoggedIn: () -> Boolean,
 ) {
-
-    private var isLoggedIn by isLoggedInState
-
-    // The route that we will navigate to after successful login.
-    private var onLoginSuccessRoute: Route? = null
-
-    fun navigate(route: Route) {
-        if (route.requiresLogin && !isLoggedIn) {
-            // Store the intended destination and redirect to login
-            onLoginSuccessRoute = route
-            backStack.add(loginRoute)
+    fun navigate(key: ConditionalNavKey) {
+        if (key.requiresLogin && !isLoggedIn()) {
+            val loginKey = onNavigateToRestrictedKey(key)
+            backStack.add(loginKey)
         } else {
-            backStack.add(route)
-        }
-
-        // If the user explicitly requested the login route, don't redirect them after login
-        if (route == loginRoute) {
-            onLoginSuccessRoute = null
+            backStack.add(key)
         }
     }
 
     fun goBack() = backStack.removeLastOrNull()
-
-    fun login() {
-        isLoggedIn = true
-        onLoginSuccessRoute?.let {
-            backStack.add(it)
-            backStack.remove(loginRoute)
-        }
-    }
-
-    fun logout() {
-        isLoggedIn = false
-        backStack.removeAll { it.requiresLogin }
-    }
 }

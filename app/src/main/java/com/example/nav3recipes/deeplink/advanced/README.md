@@ -8,7 +8,7 @@ This recipe simulates a real-world scenario where "App A" deeplinks
 into "App B".
 
 "App A" is simulated by the module [com.example.nav3recipes.deeplink.advanced](/app/src/main/java/com/example/nav3recipes/deeplink/advanced), which
-contains the [CreateAdvancedDeepLinkActivity] that allows you to create a deeplink intent and
+contains the `CreateAdvancedDeepLinkActivity` that allows you to create a deeplink intent and
 trigger that in either the existing Task, or in a new Task.
 
 "App B" is simulated by the module [advanceddeeplinkapp](/advanceddeeplinkapp/src/main/java/com/example/nav3recipes/deeplink/advanced), which contains

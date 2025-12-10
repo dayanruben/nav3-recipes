@@ -34,6 +34,12 @@ import org.koin.dsl.koinApplication
  */
 @OptIn(KoinExperimentalAPI::class)
 class KoinModularActivity : ComponentActivity(), AndroidScopeComponent, KoinComponent {
+    // Local Koin Context Instance
+    companion object {
+        private val localKoin = koinApplication {
+            modules(appModule)
+        }.koin
+    }
     // Override default Koin context to use the local one
     override fun getKoin(): Koin = localKoin
     override val scope : Scope by activityRetainedScope()
@@ -55,10 +61,4 @@ class KoinModularActivity : ComponentActivity(), AndroidScopeComponent, KoinComp
         }
     }
 
-    // Local Koin Context Instance
-    companion object {
-        private val localKoin = koinApplication {
-            modules(appModule)
-        }.koin
-    }
 }

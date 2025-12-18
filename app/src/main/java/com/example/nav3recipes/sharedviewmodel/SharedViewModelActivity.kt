@@ -71,15 +71,11 @@ class SharedViewModelActivity : ComponentActivity() {
                         val viewModel = viewModel(modelClass = CounterViewModel::class)
 
                         ContentRed("Parent screen") {
-                            Column {
-                                Button(onClick = {
-                                    viewModel.count++
-                                }) {
-                                    Text("Count: ${viewModel.count}")
-                                }
-                                Button(onClick = { backStack.add(ChildScreen) }) {
-                                    Text("View child screen")
-                                }
+                            Button(onClick = { viewModel.count++ }) {
+                                Text("Count: ${viewModel.count}")
+                            }
+                            Button(onClick = { backStack.add(ChildScreen) }) {
+                                Text("View child screen")
                             }
                         }
                     }

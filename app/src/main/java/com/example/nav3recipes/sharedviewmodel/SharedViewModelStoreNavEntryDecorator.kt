@@ -71,6 +71,12 @@ fun <T : Any> rememberSharedViewModelStoreNavEntryDecorator(
  * Provides the content of a [NavEntry] with a [ViewModelStoreOwner] and provides that
  * [ViewModelStoreOwner] as a [LocalViewModelStoreOwner] so that it is available within the content.
  *
+ * If the [NavEntry] specifies that it has a parent in its metadata, the parent's
+ * [ViewModelStoreOwner] will be supplied instead of creating a new one. This allows the
+ * entry to access its parent's [ViewModel]s.
+ *
+ * @see [SharedViewModelStoreNavEntryDecorator.parent]
+ *
  * This requires the usage of [androidx.navigation3.runtime.SaveableStateHolderNavEntryDecorator] to
  * ensure that the [NavEntry] scoped [ViewModel]s can properly provide access to
  * [androidx.lifecycle.SavedStateHandle]s
@@ -120,7 +126,7 @@ class SharedViewModelStoreNavEntryDecorator<T : Any>(
                     init {
                         require(this.lifecycle.currentState == Lifecycle.State.INITIALIZED) {
                             "The Lifecycle state is already beyond INITIALIZED. The " +
-                                    "ViewModelStoreNavEntryDecorator requires adding the " +
+                                    "SharedViewModelStoreNavEntryDecorator requires adding the " +
                                     "SavedStateNavEntryDecorator to ensure support for " +
                                     "SavedStateHandles."
                         }

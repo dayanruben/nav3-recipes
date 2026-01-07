@@ -53,7 +53,7 @@ internal class DeepLinkPattern<T : NavKey>(
      * order matters here - path segments need to match in value and order when matching
      * requested deeplink to supported deeplink
      */
-    val pathSegments: List<PathSegment>  = buildList {
+    val pathSegments: List<PathSegment> = buildList {
         uriPattern.pathSegments.forEach { segment ->
             // first, check if it is a path arg
             var result = regexPatternFillIn.find(segment)
@@ -70,10 +70,10 @@ internal class DeepLinkPattern<T : NavKey>(
 
                 val elementDescriptor = serializer.descriptor.getElementDescriptor(elementIndex)
                 // finally, add the arg name and its respective type parser to the map
-                add(PathSegment(argName, true,getTypeParser(elementDescriptor.kind)))
+                add(PathSegment(argName, true, getTypeParser(elementDescriptor.kind)))
             } else {
                 // if its not a path arg, then its just a static string path segment
-                add(PathSegment(segment,false, getTypeParser(PrimitiveKind.STRING)))
+                add(PathSegment(segment, false, getTypeParser(PrimitiveKind.STRING)))
             }
         }
     }

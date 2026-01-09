@@ -64,7 +64,7 @@ internal class DeepLinkPattern<T : NavKey>(
                 val elementIndex = serializer.descriptor.getElementIndex(argName)
                 if (elementIndex == CompositeDecoder.UNKNOWN_NAME) {
                     throw IllegalArgumentException(
-                        "Path parameter '{$argName}' defined in the DeepLink pattern does not exist in the Serializable class '${serializer.descriptor.serialName}'."
+                        "Path parameter '{$argName}' defined in the DeepLink $uriPattern does not exist in the Serializable class '${serializer.descriptor.serialName}'."
                     )
                 }
 
@@ -88,7 +88,7 @@ internal class DeepLinkPattern<T : NavKey>(
             val elementIndex = serializer.descriptor.getElementIndex(paramName)
             if (elementIndex == CompositeDecoder.UNKNOWN_NAME) {
                 throw IllegalArgumentException(
-                    "Query parameter '$paramName' defined in the DeepLink pattern does not exist in the Serializable class '${serializer.descriptor.serialName}'."
+                    "Query parameter '$paramName' defined in the DeepLink $uriPattern does not exist in the Serializable class '${serializer.descriptor.serialName}'."
                 )
             }
             val elementDescriptor = serializer.descriptor.getElementDescriptor(elementIndex)

@@ -5,8 +5,8 @@ This recipe demonstrates how to share a `ViewModel` between different screens (e
 ## How it works
 
 This example defines three screens:
-- `ParentScreen`: Starts a flow and holds the main state in `CounterViewModel`.
-- `ChildScreen`: A sub-screen that needs access to the `ParentScreen`'s state.
+- `ParentScreen`: Displays a button that increments a counter, the counter state is held in a `CounterViewModel`.
+- `ChildScreen`: A sub-screen that can update the `ParentScreen`'s counter state.
 - `StandaloneScreen`: An independent screen with its own isolated state.
 
 ### `SharedViewModelStoreNavEntryDecorator`

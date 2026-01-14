@@ -127,11 +127,10 @@ class NavigationState(
      *
      * @return the current top level routes that are in use.
      */
-    private fun getTopLevelRoutesInUse() : List<NavKey> {
-        return if (topLevelRoute == startRoute) {
+    private fun getTopLevelRoutesInUse() : List<NavKey> =
+		if (topLevelRoute == startRoute) {
             listOf(startRoute)
         } else {
             listOf(startRoute, topLevelRoute)
         }
-    }
 }

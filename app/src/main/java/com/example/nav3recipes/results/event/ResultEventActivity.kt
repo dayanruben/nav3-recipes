@@ -26,6 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.result.LocalResultEventBus
+import androidx.navigation3.runtime.result.ResultEffect
+import androidx.navigation3.runtime.result.ResultEventBus
+import androidx.navigation3.runtime.result.rememberResultEventBusNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.example.nav3recipes.results.common.Home
 import com.example.nav3recipes.results.common.HomeScreen
@@ -42,8 +46,6 @@ class ResultEventActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val resultBus = remember { ResultEventBus() }
-
             Scaffold { paddingValues ->
 
                 val backStack = rememberNavBackStack(Home)
@@ -52,10 +54,11 @@ class ResultEventActivity : ComponentActivity() {
                     backStack = backStack,
                     modifier = Modifier.padding(paddingValues),
                     onBack = { backStack.removeLastOrNull() },
+                    entryDecorators = listOf(rememberResultEventBusNavEntryDecorator()),
                     entryProvider = entryProvider {
                         entry<Home> {
                             val viewModel = viewModel<HomeViewModel>(key = Home.toString())
-                            ResultEffect<Person>(resultBus) { person ->
+                            ResultEffect<Person> { person ->
                                 viewModel.person = person
                             }
 
@@ -66,6 +69,7 @@ class ResultEventActivity : ComponentActivity() {
                             )
                         }
                         entry<PersonDetailsForm> {
+                            val resultBus = LocalResultEventBus.current
                             PersonDetailsScreen(
                                 onSubmit = { person ->
                                     resultBus.sendResult<Person>(result = person)

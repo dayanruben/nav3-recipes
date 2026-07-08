@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 The Android Open Source Project
+ * Copyright 2026 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.nav3recipes.results.event
+package com.example.nav3recipes.results.serializable
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,23 +22,20 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.runtime.result.LocalResultEventBus
-import androidx.navigation3.runtime.result.ResultEffect
 import androidx.navigation3.runtime.result.rememberResultEventBusNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.example.nav3recipes.results.common.Home
 import com.example.nav3recipes.results.common.HomeScreen
-import com.example.nav3recipes.results.common.HomeViewModel
 import com.example.nav3recipes.results.common.Person
 import com.example.nav3recipes.results.common.PersonDetailsForm
 import com.example.nav3recipes.results.common.PersonDetailsScreen
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 
-class ResultEventActivity : ComponentActivity() {
+class ResultSerializableActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setEdgeToEdgeConfig()
@@ -46,9 +43,7 @@ class ResultEventActivity : ComponentActivity() {
 
         setContent {
             Scaffold { paddingValues ->
-
                 val backStack = rememberNavBackStack(Home)
-
                 NavDisplay(
                     backStack = backStack,
                     modifier = Modifier.padding(paddingValues),
@@ -59,12 +54,10 @@ class ResultEventActivity : ComponentActivity() {
                     ),
                     entryProvider = entryProvider {
                         entry<Home> {
-                            val viewModel = viewModel<HomeViewModel>(key = Home.toString())
-                            ResultEffect<Person> { person ->
-                                viewModel.person = person
-                            }
-
-                            val person = viewModel.person
+                            val resultState = LocalResultEventBus
+                                .current
+                                .conflateAsSerializableState<Person?>(null)
+                            val person = resultState.value
                             HomeScreen(
                                 person = person,
                                 onNext = { backStack.add(PersonDetailsForm()) }
@@ -74,7 +67,7 @@ class ResultEventActivity : ComponentActivity() {
                             val resultBus = LocalResultEventBus.current
                             PersonDetailsScreen(
                                 onSubmit = { person ->
-                                    resultBus.sendResult<Person>(result = person)
+                                    resultBus.sendResult(result = person)
                                     backStack.removeLastOrNull()
                                 }
                             )

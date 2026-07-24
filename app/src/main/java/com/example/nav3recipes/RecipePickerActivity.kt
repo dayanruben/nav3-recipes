@@ -57,6 +57,7 @@ import com.example.nav3recipes.dialog.DialogActivity
 import com.example.nav3recipes.dialogscenedecorator.DialogSceneDecoratorActivity
 import com.example.nav3recipes.dynamicfeature.DynamicFeatureActivity
 import com.example.nav3recipes.interop.InteropActivity
+import com.example.nav3recipes.lifecycleowner.LifecycleOwnerActivity
 import com.example.nav3recipes.material.listdetail.MaterialListDetailActivity
 import com.example.nav3recipes.material.supportingpane.MaterialSupportingPaneActivity
 import com.example.nav3recipes.modular.hilt.HiltModularActivity
@@ -116,6 +117,7 @@ private val recipes = listOf(
     Recipe("Conditional navigation", ConditionalActivity::class.java),
     Recipe("Shared ViewModel", SharedViewModelActivity::class.java),
     Recipe("Retain", RetainActivity::class.java),
+    Recipe("Lifecycle Owner", LifecycleOwnerActivity::class.java),
 
     Heading("Architecture"),
     Recipe("Hilt - Modular Navigation", HiltModularActivity::class.java),

@@ -45,6 +45,7 @@ Note: If you find a bug or have a feature request for Material3 Adaptive Scenes 
 
 ### Animations
 - **[Animations](app/src/main/java/com/example/nav3recipes/animations)**: Shows how to override the default animations for all destinations and a single destination.
+- **[Conditional transitions](app/src/main/java/com/example/nav3recipes/conditionaltransitions)**: Demonstrates how to conditionally select slide transition directions based on pairs of initial and target navigation keys.
 
 ### Common back stack behavior
 - **[Common navigation UI](app/src/main/java/com/example/nav3recipes/commonui)**: A common navigation toolbar where each item in the toolbar navigates to a top level destination.

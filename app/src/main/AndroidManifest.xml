@@ -239,6 +239,14 @@
             android:name=".conditionaltransitions.ConditionalTransitionsActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes"/>
+        <activity
+            android:name=".deeplink.usecases.matcher.CustomDeepLinkMatcherActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Nav3Recipes"/>
+        <activity
+            android:name=".deeplink.usecases.matcher.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Nav3Recipes"/>
     </application>
 
 </manifest>

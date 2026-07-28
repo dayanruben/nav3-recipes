@@ -45,6 +45,11 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Nav3Recipes"/>
         <activity
+            android:name=".lifecycleowner.LifecycleOwnerActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Nav3Recipes"/>
+        <activity
             android:name=".commonui.CommonUiActivity"
             android:exported="true"
             android:label="@string/app_name"

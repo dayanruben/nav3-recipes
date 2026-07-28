@@ -51,6 +51,7 @@ import com.example.nav3recipes.commonui.CommonUiActivity
 import com.example.nav3recipes.conditional.ConditionalActivity
 import com.example.nav3recipes.deeplink.advanced.AdvancedCreateDeepLinkActivity
 import com.example.nav3recipes.deeplink.basic.CreateDeepLinkActivity
+import com.example.nav3recipes.deeplink.staticuri.StaticUriDeepLinkActivity
 import com.example.nav3recipes.dialog.DialogActivity
 import com.example.nav3recipes.dialogscenedecorator.DialogSceneDecoratorActivity
 import com.example.nav3recipes.dynamicfeature.DynamicFeatureActivity
@@ -130,6 +131,7 @@ private val recipes = listOf(
     Recipe("Return result as Serializable State", ResultSerializableActivity::class.java),
 
     Heading("Deeplink"),
+    Recipe("Static Uri", StaticUriDeepLinkActivity::class.java),
     Recipe("Parse Intent", CreateDeepLinkActivity::class.java),
     Recipe("Synthetic BackStack", AdvancedCreateDeepLinkActivity::class.java),
 

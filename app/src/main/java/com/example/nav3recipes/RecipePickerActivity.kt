@@ -49,6 +49,7 @@ import com.example.nav3recipes.basicsaveable.BasicSaveableActivity
 import com.example.nav3recipes.bottomsheet.BottomSheetActivity
 import com.example.nav3recipes.commonui.CommonUiActivity
 import com.example.nav3recipes.conditional.ConditionalActivity
+import com.example.nav3recipes.conditionaltransitions.ConditionalTransitionsActivity
 import com.example.nav3recipes.deeplink.advanced.AdvancedCreateDeepLinkActivity
 import com.example.nav3recipes.deeplink.basic.CreateDeepLinkActivity
 import com.example.nav3recipes.deeplink.staticuri.StaticUriDeepLinkActivity
@@ -107,6 +108,7 @@ private val recipes = listOf(
 
     Heading("Animations"),
     Recipe("NavDisplay and NavEntry animations", AnimatedActivity::class.java),
+    Recipe("Conditional transition animations", ConditionalTransitionsActivity::class.java),
 
     Heading("Common use cases"),
     Recipe("Common UI", CommonUiActivity::class.java),

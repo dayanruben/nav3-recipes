@@ -1,6 +1,6 @@
-package com.example.nav3recipes.deeplink.basic.ui
+package com.example.nav3recipes.deeplink.handlerequests.basic.ui
 
-import com.example.nav3recipes.deeplink.basic.SearchKey
+import com.example.nav3recipes.deeplink.handlerequests.basic.SearchKey
 
 /**
  * String resources

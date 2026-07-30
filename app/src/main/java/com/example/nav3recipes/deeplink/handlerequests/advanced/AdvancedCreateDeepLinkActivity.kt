@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.advanced
+package com.example.nav3recipes.deeplink.handlerequests.advanced
 
 import android.content.Intent
 import android.os.Bundle

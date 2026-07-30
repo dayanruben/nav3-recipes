@@ -18,6 +18,6 @@ See `MainActivity.deepLinkPatterns` for the actual url pattern of each.
 ## Recipe structure
 
 This recipe consists of three main packages:
-1. `basic.deeplink` - Contains the two activities
-2. `basic.deeplink.ui` - Contains the activity UI code, i.e. global string variables, deeplink URLs etc
-3. `basic.deeplink.util` - Contains the classes and helper methods to parse and match the deeplinks
+1. `basic` - Contains the two activities
+2. `basic.ui` - Contains the activity UI code, i.e. global string variables, deeplink URLs etc
+3. `basic.util` - Contains the classes and helper methods to parse and match the deeplinks

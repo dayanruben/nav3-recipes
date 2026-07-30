@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.staticuri
+package com.example.nav3recipes.deeplink.handlerequests.staticuri
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import androidx.lifecycle.compose.dropUnlessResumed
 import com.example.nav3recipes.common.deeplink.EntryScreen
 import com.example.nav3recipes.common.deeplink.PaddedButton
 import com.example.nav3recipes.common.deeplink.TextContent
-import com.example.nav3recipes.deeplink.basic.ui.PATH_BASE
+import com.example.nav3recipes.deeplink.handlerequests.basic.ui.PATH_BASE
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 
 const val HOME_URI = "$PATH_BASE/home"

@@ -50,9 +50,9 @@ import com.example.nav3recipes.bottomsheet.BottomSheetActivity
 import com.example.nav3recipes.commonui.CommonUiActivity
 import com.example.nav3recipes.conditional.ConditionalActivity
 import com.example.nav3recipes.conditionaltransitions.ConditionalTransitionsActivity
-import com.example.nav3recipes.deeplink.advanced.AdvancedCreateDeepLinkActivity
-import com.example.nav3recipes.deeplink.basic.CreateDeepLinkActivity
-import com.example.nav3recipes.deeplink.staticuri.StaticUriDeepLinkActivity
+import com.example.nav3recipes.deeplink.handlerequests.advanced.AdvancedCreateDeepLinkActivity
+import com.example.nav3recipes.deeplink.handlerequests.basic.CreateDeepLinkActivity
+import com.example.nav3recipes.deeplink.handlerequests.staticuri.StaticUriDeepLinkActivity
 import com.example.nav3recipes.dialog.DialogActivity
 import com.example.nav3recipes.dialogscenedecorator.DialogSceneDecoratorActivity
 import com.example.nav3recipes.dynamicfeature.DynamicFeatureActivity

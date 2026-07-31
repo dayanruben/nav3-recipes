@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.basic
+package com.example.nav3recipes.deeplink.handlerequests.basic
 
 import android.net.Uri
 import android.os.Bundle
@@ -14,14 +14,14 @@ import com.example.nav3recipes.common.deeplink.EntryScreen
 import com.example.nav3recipes.common.deeplink.FriendsList
 import com.example.nav3recipes.common.deeplink.LIST_USERS
 import com.example.nav3recipes.common.deeplink.TextContent
-import com.example.nav3recipes.deeplink.basic.ui.URL_HOME_EXACT
-import com.example.nav3recipes.deeplink.basic.ui.URL_SEARCH
-import com.example.nav3recipes.deeplink.basic.ui.URL_USERS_WITH_FILTER
-import com.example.nav3recipes.deeplink.basic.util.DeepLinkMatchResult
-import com.example.nav3recipes.deeplink.basic.util.DeepLinkMatcher
-import com.example.nav3recipes.deeplink.basic.util.DeepLinkPattern
-import com.example.nav3recipes.deeplink.basic.util.DeepLinkRequest
-import com.example.nav3recipes.deeplink.basic.util.KeyDecoder
+import com.example.nav3recipes.deeplink.handlerequests.basic.ui.URL_HOME_EXACT
+import com.example.nav3recipes.deeplink.handlerequests.basic.ui.URL_SEARCH
+import com.example.nav3recipes.deeplink.handlerequests.basic.ui.URL_USERS_WITH_FILTER
+import com.example.nav3recipes.deeplink.handlerequests.basic.util.DeepLinkMatchResult
+import com.example.nav3recipes.deeplink.handlerequests.basic.util.DeepLinkMatcher
+import com.example.nav3recipes.deeplink.handlerequests.basic.util.DeepLinkPattern
+import com.example.nav3recipes.deeplink.handlerequests.basic.util.DeepLinkRequest
+import com.example.nav3recipes.deeplink.handlerequests.basic.util.KeyDecoder
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 
 /**

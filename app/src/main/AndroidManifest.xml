@@ -152,17 +152,17 @@
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes"/>
         <activity
-            android:name=".deeplink.staticuri.StaticUriDeepLinkActivity"
+            android:name=".deeplink.handlerequests.staticuri.StaticUriDeepLinkActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
         </activity>
         <activity
-            android:name=".deeplink.staticuri.MainActivity"
+            android:name=".deeplink.handlerequests.staticuri.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
         </activity>
         <activity
-            android:name=".deeplink.basic.CreateDeepLinkActivity"
+            android:name=".deeplink.handlerequests.basic.CreateDeepLinkActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
         </activity>
@@ -171,7 +171,7 @@
             android:theme="@style/Theme.Nav3Recipes">
         </activity>
         <activity
-            android:name=".deeplink.basic.MainActivity"
+            android:name=".deeplink.handlerequests.basic.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
             <intent-filter android:autoVerify="true">
@@ -208,7 +208,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".deeplink.advanced.AdvancedCreateDeepLinkActivity"
+            android:name=".deeplink.handlerequests.advanced.AdvancedCreateDeepLinkActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
         </activity>

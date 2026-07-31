@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.staticuri
+package com.example.nav3recipes.deeplink.handlerequests.staticuri
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,8 +10,8 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.example.nav3recipes.common.deeplink.EntryScreen
 import com.example.nav3recipes.common.deeplink.TextContent
-import com.example.nav3recipes.deeplink.basic.HomeKey
-import com.example.nav3recipes.deeplink.basic.NavRecipeKey
+import com.example.nav3recipes.deeplink.handlerequests.basic.HomeKey
+import com.example.nav3recipes.deeplink.handlerequests.basic.NavRecipeKey
 import androidx.navigation3.runtime.deeplink.DeepLinkRequest
 import androidx.navigation3.runtime.deeplink.DeepLinkUri
 import androidx.navigation3.runtime.deeplink.UriDeepLinkMatcher

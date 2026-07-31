@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.basic
+package com.example.nav3recipes.deeplink.handlerequests.basic
 
 import android.content.Intent
 import android.os.Bundle
@@ -26,10 +26,10 @@ import com.example.nav3recipes.common.deeplink.MenuDropDown
 import com.example.nav3recipes.common.deeplink.MenuTextInput
 import com.example.nav3recipes.common.deeplink.PaddedButton
 import com.example.nav3recipes.common.deeplink.TextContent
-import com.example.nav3recipes.deeplink.basic.ui.PATH_BASE
-import com.example.nav3recipes.deeplink.basic.ui.PATH_INCLUDE
-import com.example.nav3recipes.deeplink.basic.ui.PATH_SEARCH
-import com.example.nav3recipes.deeplink.basic.ui.STRING_LITERAL_HOME
+import com.example.nav3recipes.deeplink.handlerequests.basic.ui.PATH_BASE
+import com.example.nav3recipes.deeplink.handlerequests.basic.ui.PATH_INCLUDE
+import com.example.nav3recipes.deeplink.handlerequests.basic.ui.PATH_SEARCH
+import com.example.nav3recipes.deeplink.handlerequests.basic.ui.STRING_LITERAL_HOME
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 
 /**

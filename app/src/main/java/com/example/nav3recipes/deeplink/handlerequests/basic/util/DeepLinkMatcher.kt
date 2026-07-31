@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.basic.util
+package com.example.nav3recipes.deeplink.handlerequests.basic.util
 
 import android.util.Log
 import androidx.navigation3.runtime.NavKey

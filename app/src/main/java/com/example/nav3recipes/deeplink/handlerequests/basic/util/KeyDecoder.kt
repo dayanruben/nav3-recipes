@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.basic.util
+package com.example.nav3recipes.deeplink.handlerequests.basic.util
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.SerialDescriptor

@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.handlerequests.basic
+package com.example.nav3recipes.deeplink.handlerequests.uriarguments
 
 import android.content.Intent
 import android.os.Bundle
@@ -26,35 +26,18 @@ import com.example.nav3recipes.common.deeplink.MenuDropDown
 import com.example.nav3recipes.common.deeplink.MenuTextInput
 import com.example.nav3recipes.common.deeplink.PaddedButton
 import com.example.nav3recipes.common.deeplink.TextContent
-import com.example.nav3recipes.deeplink.handlerequests.basic.ui.PATH_BASE
-import com.example.nav3recipes.deeplink.handlerequests.basic.ui.PATH_INCLUDE
-import com.example.nav3recipes.deeplink.handlerequests.basic.ui.PATH_SEARCH
-import com.example.nav3recipes.deeplink.handlerequests.basic.ui.STRING_LITERAL_HOME
+import com.example.nav3recipes.deeplink.handlerequests.uriarguments.ui.PATH_BASE
+import com.example.nav3recipes.deeplink.handlerequests.uriarguments.ui.PATH_INCLUDE
+import com.example.nav3recipes.deeplink.handlerequests.uriarguments.ui.PATH_SEARCH
+import com.example.nav3recipes.deeplink.handlerequests.uriarguments.ui.STRING_LITERAL_HOME
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 
 /**
- * This activity allows the user to create a deep link and make a request with it.
- *
- * **HOW THIS RECIPE WORKS** it consists of two activities - [CreateDeepLinkActivity] to construct
- * and trigger the deeplink request, and the [MainActivity] to show how an app can handle
- * that request.
- *
- * **DEMONSTRATED FORMS OF DEEPLINK** The [MainActivity] has a several backStack keys to
- * demonstrate different types of supported deeplinks:
- * 1. [HomeKey] - deeplink with an exact url (no deeplink arguments)
- * 2. [UsersKey] - deeplink with path arguments
- * 3. [SearchKey] - deeplink with query arguments
- * See [MainActivity.deepLinkPatterns] for the actual url pattern of each.
- *
- * **RECIPE STRUCTURE** This recipe consists of three main packages:
- * 1. basic.deeplink - Contains the two activities
- * 2. basic.deeplink.ui - Contains the activity UI code, i.e. global string variables, deeplink URLs etc
- * 3. basic.deeplink.util - Contains the classes and helper methods to parse and match
- * the deeplinks
+ * See README.md for how this recipe works.
  *
  * See [MainActivity] for how the requested deeplink is handled.
  */
-class CreateDeepLinkActivity : ComponentActivity() {
+class UriWithArgumentsDeepLinkActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setEdgeToEdgeConfig()
         super.onCreate(savedInstanceState)
@@ -154,7 +137,7 @@ class CreateDeepLinkActivity : ComponentActivity() {
                 // deeplink to target
                 PaddedButton("Deeplink Away!", onClick = dropUnlessResumed {
                     val intent = Intent(
-                        this@CreateDeepLinkActivity,
+                        this@UriWithArgumentsDeepLinkActivity,
                         MainActivity::class.java
                     )
                     // start activity with the url

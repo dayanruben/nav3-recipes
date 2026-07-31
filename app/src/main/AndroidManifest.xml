@@ -162,7 +162,7 @@
             android:theme="@style/Theme.Nav3Recipes">
         </activity>
         <activity
-            android:name=".deeplink.handlerequests.basic.CreateDeepLinkActivity"
+            android:name=".deeplink.handlerequests.uriarguments.UriWithArgumentsDeepLinkActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
         </activity>
@@ -171,7 +171,7 @@
             android:theme="@style/Theme.Nav3Recipes">
         </activity>
         <activity
-            android:name=".deeplink.handlerequests.basic.MainActivity"
+            android:name=".deeplink.handlerequests.uriarguments.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
             <intent-filter android:autoVerify="true">

@@ -3,61 +3,16 @@ package com.example.nav3recipes.deeplink.syntheticbackstack.util
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
-import com.example.nav3recipes.common.deeplink.LIST_USERS
-import com.example.nav3recipes.deeplink.syntheticbackstack.DEEPLINK_URL_TAG_USER
-import com.example.nav3recipes.deeplink.syntheticbackstack.DEEPLINK_URL_TAG_USERS
-import com.example.nav3recipes.deeplink.syntheticbackstack.Home
 import com.example.nav3recipes.deeplink.syntheticbackstack.NavDeepLinkRecipeKey
-import com.example.nav3recipes.deeplink.syntheticbackstack.UserDetail
-import com.example.nav3recipes.deeplink.syntheticbackstack.Users
 
 /**
- * A function that build a synthetic backStack.
+ * Navigates up in the back stack. This is triggered by
+ * the Up button (as opposed to a back button).
  *
- * This helper returns one of two possible backStacks:
- *
- * 1. a backStack with only the deeplinked key if [buildFullPath] is false.
- * 2. a backStack containing the deeplinked key and its hierarchical parent keys
- * if [buildFullPath] is true.
- *
- * In the context of this recipe, [buildFullPath] is true if the deeplink intent has the
- * [android.content.Intent.FLAG_ACTIVITY_NEW_TASK] and [android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK]
- * flags.
- * These flags indicate that the deeplinked Activity was started as the root Activity of a new Task, in which case
- * a full synthetic backStack is required in order to support the proper, expected back button behavior.
- *
- * If those flags were not present, it means the deeplinked Activity was started
- * in the app that originally triggered the deeplink. In this case, that original app is assumed to
- * already have existing screens that users can system back into, therefore a synthetic backstack
- * is OPTIONAL.
- *
- */
-internal fun buildBackStack(
-    startKey: NavKey,
-    buildFullPath: Boolean
-): List<NavKey> {
-    if (!buildFullPath) return listOf(startKey)
-    /**
-     * iterate up the parents of the startKey until it reaches the root key (a key without a parent)
-     */
-    return buildList {
-        var node: NavKey? = startKey
-        while (node != null) {
-            add(0, node)
-            val parent = if (node is NavDeepLinkRecipeKey) {
-                node.parent
-            } else null
-            node = parent
-        }
-    }
-}
-
-/**
  * If this app was started on its own Task stack, then navigate up would simply
  * pop from the backStack.
  *
@@ -76,9 +31,14 @@ internal fun NavBackStack<NavKey>.navigateUp(
     context: Context
 ) {
     /**
-     * The root key (the first key on synthetic backStack) would/should never display the Up button.
-     * So if the backStack only contains a non-root key, it means a synthetic backStack had not
-     * been built (aka the app was opened in the originating Task).
+     * The root key (the first key on a synthetic backStack) would/should never display the Up button.
+     *
+     * So if the backStack contains only one key, we can assume that the screen that this `up`
+     * button was triggered from was displaying a non-root key.
+     *
+     * Since the back stack only has a non-root key, it also means that a synthetic backStack had not
+     * been built (aka the app was opened in the originating Task). In this case, we would
+     * need to build one.
      */
     if (size == 1) {
         val currKey = last()
@@ -127,7 +87,7 @@ private fun createTaskStackBuilder(
      * can build the synthetic backStack starting from the deeplink key all the way up to the
      * root key.
      *
-     * See [buildBackStack] for building synthetic backStack.
+     * See [SimpleDeepLinkMatcher.withBackStack] for building synthetic backStack.
      */
     if (deeplinkKey != null && deeplinkKey is NavDeepLinkRecipeKey) {
         intent.data = deeplinkKey.deeplinkUrl.toUri()
@@ -145,31 +105,4 @@ private fun createTaskStackBuilder(
      * add the intents for the parent activities (if any) of [activity].
      */
     return TaskStackBuilder.create(context).addNextIntentWithParentStack(intent)
-}
-
-/**
- * A function that converts a deeplink uri into a NavKey.
- *
- * This helper is intentionally simple and basic. For a recipe that focuses on parsing a
- * deeplink uri into a NavKey, please see [com.example.nav3recipes.deeplink.basic].
- */
-internal fun Uri?.toKey(): NavKey {
-    if (this == null) return Home
-
-    val paths = pathSegments
-
-    if (pathSegments.isEmpty()) return Home
-
-    return when(paths.first()) {
-        DEEPLINK_URL_TAG_USERS -> Users
-        DEEPLINK_URL_TAG_USER -> {
-            val firstName = pathSegments[1]
-            val location = pathSegments[2]
-            val user = LIST_USERS.find {
-                it.firstName == firstName && it.location == location
-            }
-            if (user == null) Users else UserDetail(user)
-        }
-        else -> Home
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.advanced.ui.theme
+package com.example.nav3recipes.deeplink.syntheticbackstack.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

@@ -20,10 +20,11 @@ These are the recipes and what they demonstrate.
 - **[Lifecycle Owner](app/src/main/java/com/example/nav3recipes/lifecycleowner)**: Shows how to observe and use `LocalLifecycleOwner` within entry content.
 
 ### Deep links
-Read the [guide to deeplinking](docs/deeplink-guide.md). Upvote [this issue](https://issuetracker.google.com/470282247) if you would like an API for deeplinks.
-- **[Basic](app/src/main/java/com/example/nav3recipes/deeplink/basic)**: Shows how to parse a deep link URL from an Android Intent into a navigation key.
-- **[Advanced](app/src/main/java/com/example/nav3recipes/deeplink/advanced)**: Shows how to handle deep links with a synthetic back stack and correct "Up" navigation behavior.
-- **[Custom DeepLinkMatcher](app/src/main/java/com/example/nav3recipes/deeplink/usecases/matcher)**: Demonstrates how to create a custom `DeepLinkMatcher` to parse deep links from request extras.
+Read the [guide to deeplinking](docs/deeplink-guide.md).
+- **[Static Uri](/app/src/main/java/com/example/nav3recipes/deeplink/handlerequests/staticuri)**: Shows how to handle deep links with a static Uri using `UriDeepLinkMatcher`.
+- **[Uri with Arguments](/app/src/main/java/com/example/nav3recipes/deeplink/handlerequests/uriarguments)**: Shows how to handle deep link with uri arguments using `UriDeepLinkMatcher`.
+- **[Synthetic BackStack](/app/src/main/java/com/example/nav3recipes/deeplink/handlerequests/syntheticbackstack)**: Shows how to deep link between apps with a synthetic back stack using `DeepLinkMatcher.withBackStack` and correct "Up" navigation behavior.
+- **[Custom DeepLinkMatcher](/app/src/main/java/com/example/nav3recipes/deeplink/usecases/matcher)**: Demonstrates how to create a custom `DeepLinkMatcher` to parse deep links from `DeepLinkRequest` extras.
 
 ### Scenes
 #### Use built-in Scenes

@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.advanced
+package com.example.nav3recipes.deeplink.syntheticbackstack
 
 import android.content.Intent
 import android.os.Bundle
@@ -25,11 +25,11 @@ import com.example.nav3recipes.common.deeplink.EntryScreen
 import com.example.nav3recipes.common.deeplink.FriendsList
 import com.example.nav3recipes.common.deeplink.LIST_USERS
 import com.example.nav3recipes.common.deeplink.PaddedButton
-import com.example.nav3recipes.deeplink.advanced.util.buildBackStack
-import com.example.nav3recipes.deeplink.advanced.util.navigateUp
-import com.example.nav3recipes.deeplink.advanced.util.toKey
+import com.example.nav3recipes.deeplink.syntheticbackstack.util.buildBackStack
+import com.example.nav3recipes.deeplink.syntheticbackstack.util.navigateUp
+import com.example.nav3recipes.deeplink.syntheticbackstack.util.toKey
 
-class AdvancedDeeplinkAppActivity: ComponentActivity() {
+class SyntheticBackStackAppActivity: ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,8 +66,8 @@ class AdvancedDeeplinkAppActivity: ComponentActivity() {
                             if (backStack.last() != Home) {
                                 IconButton(onClick = {
                                     backStack.navigateUp(
-                                        this@AdvancedDeeplinkAppActivity,
-                                        this@AdvancedDeeplinkAppActivity
+                                        this@SyntheticBackStackAppActivity,
+                                        this@SyntheticBackStackAppActivity
                                     )
                                 }) {
                                     Icon(

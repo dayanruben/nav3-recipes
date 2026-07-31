@@ -10,7 +10,7 @@
         android:theme="@style/Theme.Nav3Recipes"
         android:enableOnBackInvokedCallback="true">
         <activity
-            android:name="AdvancedDeeplinkAppActivity"
+            android:name="SyntheticBackStackAppActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTop"

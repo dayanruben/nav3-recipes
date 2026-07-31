@@ -1,10 +1,10 @@
-package com.example.nav3recipes.deeplink.handlerequests.basic
+package com.example.nav3recipes.deeplink.handlerequests.uriarguments
 
 import androidx.navigation3.runtime.NavKey
-import com.example.nav3recipes.deeplink.handlerequests.basic.ui.STRING_LITERAL_FILTER
-import com.example.nav3recipes.deeplink.handlerequests.basic.ui.STRING_LITERAL_HOME
-import com.example.nav3recipes.deeplink.handlerequests.basic.ui.STRING_LITERAL_SEARCH
-import com.example.nav3recipes.deeplink.handlerequests.basic.ui.STRING_LITERAL_USERS
+import com.example.nav3recipes.deeplink.handlerequests.uriarguments.ui.STRING_LITERAL_FILTER
+import com.example.nav3recipes.deeplink.handlerequests.uriarguments.ui.STRING_LITERAL_HOME
+import com.example.nav3recipes.deeplink.handlerequests.uriarguments.ui.STRING_LITERAL_SEARCH
+import com.example.nav3recipes.deeplink.handlerequests.uriarguments.ui.STRING_LITERAL_USERS
 import kotlinx.serialization.Serializable
 
 internal interface NavRecipeKey: NavKey {

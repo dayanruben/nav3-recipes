@@ -37,10 +37,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.dropUnlessResumed
 
 @Composable
-public fun EntryScreen(text: String, content: @Composable () -> Unit = { }) {
+public fun EntryScreen(text: String = "", content: @Composable () -> Unit = { }) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text(text, fontWeight = FontWeight.Bold, fontSize = FONT_SIZE_TITLE)
+            text.takeIf { it.isNotBlank() }?.let {
+                Text(text, fontWeight = FontWeight.Bold, fontSize = FONT_SIZE_TITLE)
+            }
             content()
         }
     }

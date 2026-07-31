@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.advanced.util
+package com.example.nav3recipes.deeplink.syntheticbackstack.util
 
 import android.app.Activity
 import android.content.Context
@@ -9,12 +9,12 @@ import androidx.core.net.toUri
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import com.example.nav3recipes.common.deeplink.LIST_USERS
-import com.example.nav3recipes.deeplink.advanced.DEEPLINK_URL_TAG_USER
-import com.example.nav3recipes.deeplink.advanced.DEEPLINK_URL_TAG_USERS
-import com.example.nav3recipes.deeplink.advanced.Home
-import com.example.nav3recipes.deeplink.advanced.NavDeepLinkRecipeKey
-import com.example.nav3recipes.deeplink.advanced.UserDetail
-import com.example.nav3recipes.deeplink.advanced.Users
+import com.example.nav3recipes.deeplink.syntheticbackstack.DEEPLINK_URL_TAG_USER
+import com.example.nav3recipes.deeplink.syntheticbackstack.DEEPLINK_URL_TAG_USERS
+import com.example.nav3recipes.deeplink.syntheticbackstack.Home
+import com.example.nav3recipes.deeplink.syntheticbackstack.NavDeepLinkRecipeKey
+import com.example.nav3recipes.deeplink.syntheticbackstack.UserDetail
+import com.example.nav3recipes.deeplink.syntheticbackstack.Users
 
 /**
  * A function that build a synthetic backStack.

@@ -50,7 +50,7 @@ import com.example.nav3recipes.bottomsheet.BottomSheetActivity
 import com.example.nav3recipes.commonui.CommonUiActivity
 import com.example.nav3recipes.conditional.ConditionalActivity
 import com.example.nav3recipes.conditionaltransitions.ConditionalTransitionsActivity
-import com.example.nav3recipes.deeplink.handlerequests.advanced.AdvancedCreateDeepLinkActivity
+import com.example.nav3recipes.deeplink.handlerequests.syntheticbackstack.SyntheticBackStackDeepLinkActivity
 import com.example.nav3recipes.deeplink.handlerequests.uriarguments.UriWithArgumentsDeepLinkActivity
 import com.example.nav3recipes.deeplink.handlerequests.staticuri.StaticUriDeepLinkActivity
 import com.example.nav3recipes.deeplink.usecases.matcher.CustomDeepLinkMatcherActivity
@@ -137,8 +137,8 @@ private val recipes = listOf(
 
     Heading("Deeplink"),
     Recipe("Static Uri", StaticUriDeepLinkActivity::class.java),
-    Recipe("Parse Intent", UriWithArgumentsDeepLinkActivity::class.java),
-    Recipe("Synthetic BackStack", AdvancedCreateDeepLinkActivity::class.java),
+    Recipe("Uri with Arguments", UriWithArgumentsDeepLinkActivity::class.java),
+    Recipe("Synthetic BackStack", SyntheticBackStackDeepLinkActivity::class.java),
     Recipe("Custom DeepLinkMatcher", CustomDeepLinkMatcherActivity::class.java),
 
     Heading("Interop"),

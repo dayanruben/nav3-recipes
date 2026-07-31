@@ -49,7 +49,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Nav3Recipes"
 include(":app")
-include(":advanceddeeplinkapp")
+include(":syntheticbackstackapp")
 include(":common")
 include(":dynamicfeature:installtime")
 include(":dynamicfeature:ondemand")

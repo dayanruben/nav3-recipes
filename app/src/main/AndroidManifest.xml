@@ -208,7 +208,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".deeplink.handlerequests.advanced.AdvancedCreateDeepLinkActivity"
+            android:name=".deeplink.handlerequests.syntheticbackstack.SyntheticBackStackDeepLinkActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes">
         </activity>

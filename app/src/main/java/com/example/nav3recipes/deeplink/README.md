@@ -4,8 +4,14 @@ This module contains the main recipes for deep linking with Navigation3.
 
 ## Recipe structure
 
-The deep link module consists of three main packages:
-1. `staticuri` - Shows the simple use case of deep linking with a static uri
-2. `basic` - Shows how to deep link with arguments 
-3. `advanced` - Shows how to deep link from one Activity to another Activity
-4. `usecase` - Shows various use cases for deep link usages
+The deep link module consists of two main packages:
+
+### 1. usecases
+Shows common cases for customizing deep link components
+- `matcher` - a custom `DeepLinkMatcher` to parse deep links from `DeepLinkRequest` extras
+
+### 2. handlerequests
+Shows how to handle different types of deep link requests
+- `staticuri` - handles deep links with a static Uri using `UriDeepLinkMatcher`.
+- `uriwitharguments` - handles deep link with Uri arguments using `UriDeepLinkMatcher`
+- `syntheticbackstack` - deep link between apps with a synthetic back stack using `DeepLinkMatcher.withBackStack` and correct "Up" navigation behavior

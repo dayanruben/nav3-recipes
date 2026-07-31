@@ -1,4 +1,4 @@
-package com.example.nav3recipes.deeplink.handlerequests.advanced
+package com.example.nav3recipes.deeplink.handlerequests.syntheticbackstack
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,20 +23,20 @@ internal const val ADVANCED_PATH_BASE = "https://www.nav3deeplink.com"
 /**
  * The recipe entry point that allows users to create a deep link and make a request with it.
  *
- * **HOW THIS RECIPE WORKS** This recipe simulates a real-world scenario where "App A" deeplinks
+ * **HOW THIS RECIPE WORKS** This recipe simulates a real-world scenario where "App A" deep links
  * into "App B".
  *
- * "App A" is simulated by this current module [com.example.nav3recipes.deeplink.advanced], which
- * contains the [AdvancedCreateDeepLinkActivity] that allows you to create a deeplink intent and
+ * "App A" is simulated by this current module `syntheticbackstack`, which
+ * contains the [SyntheticBackStackDeepLinkActivity] that allows you to create a deeplink intent and
  * trigger that in either the existing Task, or in a new Task.
  *
- * "App B" is simulated by the module [com.example.nav3recipes.deeplink.advanced], which contains
- * the MainActivity that you deeplink into. That module shows you how to build a synthetic backStack
+ * "App B" is simulated by the module `syntheticbackstackapp`, which contains
+ * the SyntheticBackStackAppActivity that you deeplink into. That module shows you how to build a synthetic backStack
  * and how to manage the Task stack properly in order to support both Back and Up buttons.
  *
  * See the [README](README.md) file of current module for more info on advanced deep linking.
  */
-class AdvancedCreateDeepLinkActivity: ComponentActivity() {
+class SyntheticBackStackDeepLinkActivity: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setEdgeToEdgeConfig()

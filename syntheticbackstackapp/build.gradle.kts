@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.nav3recipes.deeplink.advanced"
+    namespace = "com.example.nav3recipes.deeplink.syntheticbackstack"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.example.nav3recipes.deeplink.advanced"
+        applicationId = "com.example.nav3recipes.deeplink.syntheticbackstackapp"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

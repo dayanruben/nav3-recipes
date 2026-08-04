@@ -12,7 +12,7 @@ contains the `SyntheticBackStackDeepLinkActivity` that allows you to create a de
 trigger that in either the existing Task, or in a new Task.
 
 "App B" is simulated by the module [syntheticbackstackapp](/syntheticbackstackapp/src/main/java/com/example/nav3recipes/deeplink/syntheticbackstack), which contains
-the MainActivity that you deeplink into. That module shows you how to build a synthetic backStack
+the `SyntheticBackStackAppActivity` that you deeplink into. That module shows you how to build a synthetic backStack
 and how to manage the Task stack properly in order to support both Back and Up buttons.
 
 # How to Use
@@ -42,7 +42,7 @@ To see behavior of `New Task`:
 
 # Core implementation
 The core helper functions for navigateUp and building synthetic backStack can be
-found [here](/syntheticbackstackapp/src/main/java/com/example/nav3recipes/deeplink/syntheticbackstack/util/DeepLinkBackStackUtil.kt)
+found [here](/syntheticbackstackapp/src/main/java/com/example/nav3recipes/deeplink/syntheticbackstack/util)
 
 # Further Read
 Check out the [deep link guide](/docs/deeplink-guide.md) for a 

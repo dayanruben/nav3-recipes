@@ -18,6 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.deeplink.DeepLinkRequest
+import androidx.navigation3.runtime.deeplink.invoke
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
@@ -25,9 +27,9 @@ import com.example.nav3recipes.common.deeplink.EntryScreen
 import com.example.nav3recipes.common.deeplink.FriendsList
 import com.example.nav3recipes.common.deeplink.LIST_USERS
 import com.example.nav3recipes.common.deeplink.PaddedButton
-import com.example.nav3recipes.deeplink.syntheticbackstack.util.buildBackStack
+import com.example.nav3recipes.deeplink.syntheticbackstack.util.SimpleDeepLinkMatcher
 import com.example.nav3recipes.deeplink.syntheticbackstack.util.navigateUp
-import com.example.nav3recipes.deeplink.syntheticbackstack.util.toKey
+import com.example.nav3recipes.deeplink.syntheticbackstack.util.withBackStack
 
 class SyntheticBackStackAppActivity: ComponentActivity() {
 
@@ -36,18 +38,19 @@ class SyntheticBackStackAppActivity: ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        val startKey = intent.data.toKey()
+        val request = DeepLinkRequest(intent)
 
         val flags = intent.flags
         val isNewTask = flags and Intent.FLAG_ACTIVITY_NEW_TASK != 0 &&
                 flags and Intent.FLAG_ACTIVITY_CLEAR_TASK != 0
 
-        val syntheticBackStack = buildBackStack(
-            startKey = startKey,
-            buildFullPath = isNewTask
-        )
+        val matcher = SimpleDeepLinkMatcher().withBackStack(isNewTask)
+        val backStack = matcher.match(request)?.backStack ?: listOf(Home)
+
         setContent {
-            val backStack: NavBackStack<NavKey> = rememberNavBackStack(*(syntheticBackStack.toTypedArray()))
+            val backStack: NavBackStack<NavKey> = rememberNavBackStack().apply {
+                addAll(backStack)
+            }
 
             Scaffold(
                 topBar = {

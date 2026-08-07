@@ -54,6 +54,7 @@ import com.example.nav3recipes.deeplink.handlerequests.syntheticbackstack.Synthe
 import com.example.nav3recipes.deeplink.handlerequests.uriarguments.UriWithArgumentsDeepLinkActivity
 import com.example.nav3recipes.deeplink.handlerequests.staticuri.StaticUriDeepLinkActivity
 import com.example.nav3recipes.deeplink.usecases.matcher.CustomDeepLinkMatcherActivity
+import com.example.nav3recipes.deeplink.usecases.serializer.DeepLinkSerializerActivity
 import com.example.nav3recipes.dialog.DialogActivity
 import com.example.nav3recipes.dialogscenedecorator.DialogSceneDecoratorActivity
 import com.example.nav3recipes.dynamicfeature.DynamicFeatureActivity
@@ -140,6 +141,7 @@ private val recipes = listOf(
     Recipe("Uri with Arguments", UriWithArgumentsDeepLinkActivity::class.java),
     Recipe("Synthetic BackStack", SyntheticBackStackDeepLinkActivity::class.java),
     Recipe("Custom DeepLinkMatcher", CustomDeepLinkMatcherActivity::class.java),
+    Recipe("Uri with Non-Primitive Arguments", DeepLinkSerializerActivity::class.java),
 
     Heading("Interop"),
     Recipe("Fragment and View Interop", InteropActivity::class.java),

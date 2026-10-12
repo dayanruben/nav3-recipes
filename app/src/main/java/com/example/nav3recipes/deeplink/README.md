@@ -21,3 +21,4 @@ Shows how to handle different types of deep link requests
 
 ### 3. modular
 - [`hilt`](../modular/hilt) - multi-module deep linking with Dagger/Hilt, contributing `BackStackMatcher` instances from feature modules to build synthetic back stacks from incoming `Intent`s
+- [`koin`](../modular/koin) - multi-module deep linking with Koin, contributing `BackStackMatcher` instances from feature modules to build synthetic back stacks from incoming `Intent`s

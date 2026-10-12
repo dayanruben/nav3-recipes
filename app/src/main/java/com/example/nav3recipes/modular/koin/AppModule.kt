@@ -4,11 +4,14 @@ import org.koin.androidx.scope.dsl.activityRetainedScope
 import org.koin.dsl.module
 
 val appModule = module {
-    includes(profileModule,conversationModule)
+    includes(profileModule, conversationModule)
 
     activityRetainedScope {
         scoped {
-            Navigator(startDestination = ConversationList)
+            Navigator(
+                startDestination = ConversationList,
+                deepLinkMatchers = getAll(),
+            )
         }
     }
 }

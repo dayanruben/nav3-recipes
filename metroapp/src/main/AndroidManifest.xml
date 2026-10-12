@@ -27,6 +27,10 @@
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes"/>
         <activity
+            android:name=".modular.metro.MetroDeepLinkActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Nav3Recipes"/>
+        <activity
             android:name=".passingarguments.viewmodels.metro.MetroViewModelsActivity"
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes"/>

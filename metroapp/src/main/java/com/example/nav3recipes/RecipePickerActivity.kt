@@ -38,7 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
-import com.example.nav3recipes.modular.metro.MetroModularActivity
+import com.example.nav3recipes.modular.metro.MetroDeepLinkActivity
 import com.example.nav3recipes.passingarguments.viewmodels.metro.MetroViewModelsActivity
 import com.example.nav3recipes.ui.setEdgeToEdgeConfig
 
@@ -51,7 +51,7 @@ private class Recipe(
 )
 
 private val recipes = listOf(
-    Recipe("Modular Navigation", MetroModularActivity::class.java),
+    Recipe("Modular Navigation", MetroDeepLinkActivity::class.java),
     Recipe("Passing navigation arguments using ViewModels", MetroViewModelsActivity::class.java),
 )
 

@@ -21,6 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.deeplink.BackStackMatcher
+import androidx.navigation3.runtime.deeplink.DeepLinkUri
+import androidx.navigation3.runtime.deeplink.UriDeepLinkMatcher
+import androidx.navigation3.runtime.deeplink.withBackStack
 import com.example.nav3recipes.ui.theme.colors
 import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
@@ -29,13 +34,15 @@ import dev.zacsweers.metro.Provides
 import kotlinx.serialization.Serializable
 
 // API
+object ConversationList : NavKey
+
 @Serializable
-object ConversationList
-@Serializable
-data class ConversationDetail(val id: Int) {
+data class ConversationDetail(val id: Int) : NavKey {
     val color: Color
         get() = colors[id % colors.size]
 }
+
+const val CONVERSATION_URI = "https://www.nav3recipes.com/conversation"
 
 // IMPL
 @ContributesTo(ActivityScope::class)
@@ -56,6 +63,16 @@ object ConversationModule {
             entry<ConversationDetail> { key ->
                 ConversationDetailScreen(key) { navigator.goTo(Profile) }
             }
+        }
+
+    @IntoSet
+    @Provides
+    fun provideDeepLinkMatcher(): BackStackMatcher<*, NavKey> =
+        UriDeepLinkMatcher(
+            uriPattern = DeepLinkUri("$CONVERSATION_URI/{id}"),
+            serializer = ConversationDetail.serializer(),
+        ).withBackStack { matchResult ->
+            listOf(ConversationList, matchResult.key)
         }
 }
 

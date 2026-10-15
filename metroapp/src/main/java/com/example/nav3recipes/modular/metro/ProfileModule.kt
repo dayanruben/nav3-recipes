@@ -11,13 +11,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.deeplink.BackStackMatcher
+import androidx.navigation3.runtime.deeplink.DeepLinkUri
+import androidx.navigation3.runtime.deeplink.UriDeepLinkMatcher
+import androidx.navigation3.runtime.deeplink.withBackStack
 import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.IntoSet
 import dev.zacsweers.metro.Provides
+import kotlinx.serialization.Serializable
 
 // API
-object Profile
+@Serializable
+object Profile : NavKey
+
+const val PROFILE_URI = "https://www.nav3recipes.com/profile"
 
 // IMPLEMENTATION
 @ContributesTo(ActivityScope::class)
@@ -31,6 +40,16 @@ object ProfileModule {
             ProfileScreen()
         }
     }
+
+    @IntoSet
+    @Provides
+    fun provideDeepLinkMatcher(): BackStackMatcher<*, NavKey> =
+        UriDeepLinkMatcher(
+            uriPattern = DeepLinkUri(PROFILE_URI),
+            serializer = Profile.serializer(),
+        ).withBackStack { matchResult ->
+            listOf(ConversationList, matchResult.key)
+        }
 }
 
 @Composable

@@ -28,7 +28,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -64,13 +63,8 @@ import com.example.nav3recipes.interop.InteropActivity
 import com.example.nav3recipes.lifecycleowner.LifecycleOwnerActivity
 import com.example.nav3recipes.material.listdetail.MaterialListDetailActivity
 import com.example.nav3recipes.material.supportingpane.MaterialSupportingPaneActivity
-<<<<<<< HEAD
 import com.example.nav3recipes.modular.hilt.HiltDeepLinkActivity
-=======
-import com.example.nav3recipes.modular.hilt.HiltModularActivity
 import com.example.nav3recipes.modular.koin.KoinDeepLinkActivity
->>>>>>> 598147a (Integrate deep link matcher to Koin multi module recipe)
-import com.example.nav3recipes.modular.koin.KoinModularActivity
 import com.example.nav3recipes.multiplestacks.MultipleStacksActivity
 import com.example.nav3recipes.navscenedecorator.ResponsiveNavigationSceneDecoratorActivity
 import com.example.nav3recipes.passingarguments.viewmodels.basic.BasicViewModelsActivity
@@ -157,7 +151,6 @@ private val recipes = listOf(
 )
 
 class RecipePickerActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setEdgeToEdgeConfig()

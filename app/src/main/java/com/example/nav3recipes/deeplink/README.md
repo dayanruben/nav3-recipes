@@ -18,3 +18,6 @@ Shows how to handle different types of deep link requests
 - `staticuri` - handles deep links with a static Uri using `UriDeepLinkMatcher`.
 - `uriwitharguments` - handles deep link with Uri arguments using `UriDeepLinkMatcher`
 - `syntheticbackstack` - deep link between apps with a synthetic back stack using `DeepLinkMatcher.withBackStack` and correct "Up" navigation behavior
+
+### 3. modular
+- [`hilt`](../modular/hilt) - multi-module deep linking with Dagger/Hilt, contributing `BackStackMatcher` instances from feature modules to build synthetic back stacks from incoming `Intent`s

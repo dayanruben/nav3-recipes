@@ -24,6 +24,7 @@ class HiltModularActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setEdgeToEdgeConfig()
+        navigator.handleDeepLink(intent)
         setContent {
             Scaffold { paddingValues ->
                 NavDisplay(

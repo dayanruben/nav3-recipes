@@ -102,6 +102,11 @@
             android:exported="true"
             android:theme="@style/Theme.Nav3Recipes"/>
         <activity
+            android:name=".modular.hilt.HiltDeepLinkActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Nav3Recipes"/>
+        <activity
             android:name=".modular.hilt.HiltModularActivity"
             android:exported="true"
             android:label="@string/app_name"

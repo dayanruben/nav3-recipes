@@ -49,6 +49,7 @@ class KoinModularActivity : ComponentActivity(), AndroidScopeComponent, KoinComp
         super.onCreate(savedInstanceState)
 
         setEdgeToEdgeConfig()
+        navigator.handleDeepLink(intent)
         setContent {
             Scaffold { paddingValues ->
                 NavDisplay(

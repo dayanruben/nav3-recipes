@@ -11,19 +11,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.deeplink.BackStackMatcher
+import androidx.navigation3.runtime.deeplink.DeepLinkUri
+import androidx.navigation3.runtime.deeplink.UriDeepLinkMatcher
+import androidx.navigation3.runtime.deeplink.withBackStack
+import kotlinx.serialization.Serializable
 import org.koin.androidx.scope.dsl.activityRetainedScope
 import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.koin.dsl.navigation3.navigation
 
 // API
-object Profile
+@Serializable
+object Profile : NavKey
+
+const val PROFILE_URI = "https://www.nav3recipes.com/profile"
 
 // IMPL
 @OptIn(KoinExperimentalAPI::class)
 val profileModule = module {
     activityRetainedScope {
         navigation<Profile> { ProfileScreen() }
+    }
+
+    single<BackStackMatcher<*, NavKey>>(named<Profile>()) {
+        UriDeepLinkMatcher(
+            uriPattern = DeepLinkUri(PROFILE_URI),
+            serializer = Profile.serializer(),
+        ).withBackStack { matchResult ->
+            listOf(ConversationList, matchResult.key)
+        }
     }
 }
 
